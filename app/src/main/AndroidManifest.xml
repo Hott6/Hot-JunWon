@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SoptSeminar">
         <activity
-            android:name=".EmptyActivity2"
+            android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
