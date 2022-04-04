@@ -36,6 +36,9 @@ class SignInActivity : AppCompatActivity() {
 
             val id: String = binding.etId.text.toString() // etId : editview의 id
             val pw: String = binding.etPw.text.toString() // etPw : editview의 id
+
+            // if (!(id.equals("")) && !(pw.equals(""))) 와 같음
+           // == 연산자로 비교 가능한 것으로 볼 때, new String()으로 문자열을 생성하지 않는 것 같음!
             if (id != "" && pw != "") {
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                 startActivity(intent)
