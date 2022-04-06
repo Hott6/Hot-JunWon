@@ -12,19 +12,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
         android:text="SOPT"
-        android:textStyle="bold"
         android:textColor="@color/purple_200"
         android:textSize="30sp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_Start="20dp"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="20dp"
         android:text="아이디"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,25 +38,23 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="5dp"
+        android:hint="아이디를 입력해주세요."
         android:inputType="text"
         android:textSize="14sp"
-        android:hint="아이디를 입력해주세요."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_id"
 
-         />
+        />
 
     <TextView
-        android:id = "@+id/tv_password"
+        android:id="@+id/tv_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-
-        android:text = "비밀번호"
+        android:text="비밀번호"
         android:textColor="@color/black"
         android:textSize="14sp"
-
         app:layout_constraintStart_toStartOf="@id/tv_id"
         app:layout_constraintTop_toBottomOf="@id/et_id"
 
@@ -76,6 +74,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_password"
 
         />
+
     <Button
         android:id="@+id/btn_login"
         android:layout_width="0dp"
@@ -86,7 +85,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_pw"/>
+        app:layout_constraintTop_toBottomOf="@id/et_pw" />
 
     <Button
         android:id="@+id/btn_signup"
@@ -94,8 +93,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
-        android:text="회원가입"
         android:backgroundTint="#8BC34A"
+        android:text="회원가입"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login" />
