@@ -9,7 +9,7 @@ import org.techtown.soptseminar.databinding.ActivitySigninBinding
 
 class SignInActivity : AppCompatActivity() {
 
-    // 클래스파일 이름 바꿀 때, AndroidManifest.xml의 <activity  android: name />부분의 name을 바꿔준 후, 클래스파일의 이름을 rename해주어야 한다
+    // 클래스파일 이름 바꿀 때, AndroidManifest.xml의 <activity  android: name />  후, 클래스파일의 이름을 rename 해주어야 한다
 
     // 전역변수로 지연 초기화
     private lateinit var binding: ActivitySigninBinding
@@ -38,8 +38,11 @@ class SignInActivity : AppCompatActivity() {
             val pw: String = binding.etPw.text.toString() // etPw : editview의 id
 
             // if (!(id.equals("")) && !(pw.equals(""))) 와 같음
+            // 방법 1 : isNullOrBlank 메서드를 쓰는게 더 좋습니다!
+            // 방법 2 : isEmpty 메서드
+
            // == 연산자로 비교 가능한 것으로 볼 때, new String()으로 문자열을 생성하지 않는 것 같음!
-            if (id != "" && pw != "") {
+            if (!id.isNullOrBlank() && !pw.isNullOrBlank()) {
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                 startActivity(intent)
             }else{

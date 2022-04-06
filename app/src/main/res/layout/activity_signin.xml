@@ -23,7 +23,7 @@
         android:id="@+id/tv_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_Start="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:text="아이디"
         android:textColor="@color/black"
