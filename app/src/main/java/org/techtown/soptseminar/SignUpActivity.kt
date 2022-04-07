@@ -16,6 +16,7 @@ class SignUpActivity : AppCompatActivity() {
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val intent = Intent(this, SignInActivity::class.java)
 
         // signUp 버튼 눌렀을 때
 
@@ -24,8 +25,11 @@ class SignUpActivity : AppCompatActivity() {
             val id = binding.etId.text.toString()
             val pw = binding.etPw.text.toString()
 
-            if(name != "" && id != "" && pw != ""){
+            if(!name.isNullOrBlank() && !id.isNullOrBlank() && !pw.isNullOrBlank()){
                 // finish메서드 : back 버튼과 동일한 기능 수행
+                intent.putExtra("id",id)
+                intent.putExtra("pw",pw)
+                startActivity(intent)
 
                 finish() // 호출스택에서 나오기, 다시 SignUpActivity를 호출한 SignInActivity 화면으로 돌아간다.
             }

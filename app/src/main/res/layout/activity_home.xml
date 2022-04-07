@@ -43,7 +43,6 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_profile" />
 
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

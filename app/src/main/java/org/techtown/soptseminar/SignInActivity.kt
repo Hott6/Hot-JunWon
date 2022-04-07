@@ -26,8 +26,9 @@ class SignInActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val intent = Intent(this, HomeActivity::class.java)
-        val intent2 = Intent(this, SignUpActivity::class.java)
+        val homeIntent = Intent(this, HomeActivity::class.java)
+        val signUpIntent = Intent(this, SignUpActivity::class.java)
+
 
         // Login
         // binding 변수를 통해 xml 파일 내의 뷰 Id 접근 가능
@@ -44,7 +45,7 @@ class SignInActivity : AppCompatActivity() {
            // == 연산자로 비교 가능한 것으로 볼 때, new String()으로 문자열을 생성하지 않는 것 같음!
             if (!id.isNullOrBlank() && !pw.isNullOrBlank()) {
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                startActivity(intent)
+                startActivity(homeIntent)
             }else{
                 Toast.makeText(this, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
             }
@@ -56,10 +57,18 @@ class SignInActivity : AppCompatActivity() {
         binding.btnSignup.setOnClickListener(){
 
             // 회원가입 페이지로 이동!
-            startActivity(intent2)
+            startActivity(signUpIntent)
+        }
+
+
+        // intent : intent 받기(예전에는 getintent였다)
+        // intent 속 id, pw 정보 받기
+        binding.etId.setText(intent.getStringExtra("id")) // intent 로부터 받아온 "id"에 해당하는 value값을 etID에 저장한다.
+        binding.etPw.setText(intent.getStringExtra("pw"))
+
         }
     }
-}
+
 
 
 
