@@ -34,22 +34,19 @@ class SignInActivity : AppCompatActivity() {
         // binding 변수를 통해 xml 파일 내의 뷰 Id 접근 가능
         binding.btnLogin.setOnClickListener() {
             // 버튼 이벤트 : 버튼 눌렀을 때 로그인 되게 하기?
+            with(binding){
+                // if (!(id.equals("")) && !(pw.equals(""))) 와 같음
+                // 방법 1 : isNullOrBlank 메서드를 쓰는게 더 좋습니다!
+                // 방법 2 : isEmpty 메서드
 
-            val id: String = binding.etId.text.toString() // etId : editview의 id
-            val pw: String = binding.etPw.text.toString() // etPw : editview의 id
-
-            // if (!(id.equals("")) && !(pw.equals(""))) 와 같음
-            // 방법 1 : isNullOrBlank 메서드를 쓰는게 더 좋습니다!
-            // 방법 2 : isEmpty 메서드
-
-           // == 연산자로 비교 가능한 것으로 볼 때, new String()으로 문자열을 생성하지 않는 것 같음!
-            if (!id.isNullOrBlank() && !pw.isNullOrBlank()) {
-                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                startActivity(homeIntent)
-            }else{
-                Toast.makeText(this, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
+                // == 연산자로 비교 가능한 것으로 볼 때, new String()으로 문자열을 생성하지 않는 것 같음!
+                if (!etId.text.toString().isNullOrBlank() && !etPw.text.toString().isNullOrBlank()) {
+                    Toast.makeText(this@SignInActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    startActivity(homeIntent)
+                }else{
+                    Toast.makeText(this@SignInActivity, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
+                }
             }
-
 
         }
 
@@ -59,7 +56,6 @@ class SignInActivity : AppCompatActivity() {
             // 회원가입 페이지로 이동!
             startActivity(signUpIntent)
         }
-
 
         // intent : intent 받기(예전에는 getintent였다)
         // intent 속 id, pw 정보 받기

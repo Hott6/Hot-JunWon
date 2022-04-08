@@ -16,30 +16,27 @@ class SignUpActivity : AppCompatActivity() {
 
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val intent = Intent(this, SignInActivity::class.java)
+
 
         // signUp 버튼 눌렀을 때
 
         binding.btnSignup.setOnClickListener(){
-            val name = binding.etName.text.toString()
-            val id = binding.etId.text.toString()
-            val pw = binding.etPw.text.toString()
+            with(binding) {
 
-            if(!name.isNullOrBlank() && !id.isNullOrBlank() && !pw.isNullOrBlank()){
-                // finish메서드 : back 버튼과 동일한 기능 수행
-                intent.putExtra("id",id)
-                intent.putExtra("pw",pw)
-                startActivity(intent)
+                if (!etName.text.toString().isNullOrBlank() && !etId.text.toString().isNullOrBlank() && !etPw.text.toString().isNullOrBlank()) {
+                    // finish메서드 : back 버튼과 동일한 기능 수행
+                    val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
+                    intent.putExtra("id", etId.text.toString())
+                    intent.putExtra("pw", etPw.text.toString())
+                    startActivity(intent)
 
-                finish() // 호출스택에서 나오기, 다시 SignUpActivity를 호출한 SignInActivity 화면으로 돌아간다.
+                    finish() // 호출스택에서 나오기, 다시 SignUpActivity를 호출한 SignInActivity 화면으로 돌아간다.
+                } else {
+                    Toast.makeText(this@SignUpActivity, "입력되지 않은 정보가 있습니다", Toast.LENGTH_SHORT).show()
+                }
             }
-            else{
-                Toast.makeText(this, "입력되지 않은 정보가 있습니다", Toast.LENGTH_SHORT).show()
-            }
-
 
         }
-
 
     }
 
