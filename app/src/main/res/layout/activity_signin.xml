@@ -4,51 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EmptyActivity2">
+    tools:context=".SignInActivity">
 
     <TextView
         android:id="@+id/tv_sopt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
-
-        android:text="SOPT2"
+        android:text="SOPT"
+        android:textColor="@color/purple_200"
         android:textSize="30sp"
         android:textStyle="bold"
-
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-         />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="20dp"
-
+        android:layout_marginTop="40dp"
         android:text="아이디"
         android:textColor="@color/black"
-
-
-        app:layout_constraintTop_toBottomOf="@id/tv_sopt"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_sopt"
+
         />
 
     <EditText
-        android:id="@+id/et_id2"
+        android:id="@+id/et_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:ems="10"
+        android:layout_marginTop="5dp"
         android:hint="아이디를 입력해주세요."
-
-        android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@id/tv_id"
+        android:inputType="text"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_id"
 
         />
 
@@ -56,47 +51,53 @@
         android:id="@+id/tv_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:text="비밀번호"
         android:textColor="@color/black"
-
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_id"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="80dp"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/tv_id"
+        app:layout_constraintTop_toBottomOf="@id/et_id"
 
         />
-
-
 
     <EditText
-        android:id="@+id/et_id"
+        android:id="@+id/et_pw"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="비밀번호를 입력해주세요."
-
-
-
-
-        app:layout_constraintTop_toBottomOf="@id/tv_password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="20dp"
-         />
+        android:layout_marginTop="5dp"
+        android:hint="비밀번호를 입력해주세요"
+        android:inputType="textPassword"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_password"
+
+        />
+
     <Button
         android:id="@+id/btn_login"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:text="Login"
-        />
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_pw" />
+
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#8BC34A"
+        android:text="회원가입"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
