@@ -36,7 +36,7 @@ class FollowerFragment : Fragment() {
         with(binding) {
 
             rvFollower.adapter = followerAdapter
-            rvFollower.addItemDecoration(MyDecoration(this@FollowerFragment))
+            rvFollower.addItemDecoration(ItemDecoration(resources.getDimensionPixelOffset(R.dimen.margin_15), 1))
         }
 //        binding.rvFollower.layoutManager = GridLayoutManager(this,2)
 
