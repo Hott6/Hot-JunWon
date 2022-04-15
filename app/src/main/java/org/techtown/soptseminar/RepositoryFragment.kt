@@ -31,7 +31,6 @@ class RepositoryFragment : Fragment() {
     private fun initAdapter() {
         repositoryAdapter = RepositoryAdapter()
         with(binding) {
-
             rvRepository.adapter = repositoryAdapter
             rvRepository.addItemDecoration(MyDecoration(this@RepositoryFragment))
         }
@@ -39,11 +38,14 @@ class RepositoryFragment : Fragment() {
         repositoryAdapter.repositoryList.addAll(
 
             listOf(
-                RepositoryData("알고리즘 레포", "집에가고싶ㄷ"),
-                RepositoryData("안드로이드 레포", "뭐먹지"),
-                RepositoryData("ios 레포", "치킨먹고시푸다"),
-                RepositoryData("배고파", "치킨은 bbq.."),
-                RepositoryData("졸려", "황금올리부.."),
+                RepositoryData("today_junelog", "파이썬 + 자료구조/알고리즘 레포지토리"),
+                RepositoryData("Android_Bymurjune", "자바 + 코틀린 + 안스 레포지토리"),
+                RepositoryData("Hott6/Hot-JunWon", "30기 Sopt 안드로이드 과제 레포지토리"),
+                RepositoryData(" murjune.github.io ", "기술블로"),
+                RepositoryData(
+                    "OpportunityPod/hackerrank-interview-preparation-kit",
+                    "Hacker-Rank 인터뷰 키트 스터디 과제/발표 레포지토리"
+                ),
 
                 )
         )

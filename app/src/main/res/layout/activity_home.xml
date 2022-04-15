@@ -71,11 +71,5 @@
 
     </androidx.fragment.app.FragmentContainerView>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
