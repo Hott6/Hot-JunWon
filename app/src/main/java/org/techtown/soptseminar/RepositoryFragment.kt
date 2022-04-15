@@ -5,11 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import org.techtown.soptseminar.databinding.FragmentFollwerBinding
 import org.techtown.soptseminar.databinding.FragmentRepositoryBinding
 
 class RepositoryFragment : Fragment() {
-    private lateinit var repositoryAdapter : RepositoryAdapter
+    private lateinit var repositoryAdapter: RepositoryAdapter
     private var _binding: FragmentRepositoryBinding? = null
     private val binding get() = _binding!!
     // onCreateView 메서드는 반드시 있어야 한다.
@@ -23,15 +22,19 @@ class RepositoryFragment : Fragment() {
         initAdapter()
         return binding.root
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-    private fun initAdapter(){
 
+    private fun initAdapter() {
         repositoryAdapter = RepositoryAdapter()
+        with(binding) {
 
-        binding.rvRepository.adapter = repositoryAdapter
+            rvRepository.adapter = repositoryAdapter
+            rvRepository.addItemDecoration(MyDecoration(this@RepositoryFragment))
+        }
 
         repositoryAdapter.repositoryList.addAll(
 

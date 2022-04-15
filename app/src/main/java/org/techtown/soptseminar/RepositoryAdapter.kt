@@ -16,6 +16,7 @@ class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewH
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
         val binding =
+
             ItemRepositorySampleListBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,

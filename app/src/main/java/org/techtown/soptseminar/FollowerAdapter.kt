@@ -35,6 +35,7 @@ class FollowerAdapter : RecyclerView.Adapter<FollowerAdapter.FollowerViewHolder>
 
         //
         fun onBind(data: FollowerData) {
+            binding.ivProfile.setImageResource(data.gender)
             binding.tvName.text = data.name
             binding.tvIntroduce.text = data.introduce
         }

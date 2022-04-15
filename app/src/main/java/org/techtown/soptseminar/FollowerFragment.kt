@@ -1,16 +1,16 @@
 package org.techtown.soptseminar
 
 import android.os.Bundle
+import android.service.autofill.UserData
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import org.techtown.soptseminar.databinding.FragmentFollwerBinding
 
 class FollowerFragment : Fragment() {
 
-    private lateinit var followerAdapter : FollowerAdapter
+    private lateinit var followerAdapter: FollowerAdapter
     private var _binding: FragmentFollwerBinding? = null
     private val binding get() = _binding!!
     // onCreateView 메서드는 반드시 있어야 한다.
@@ -30,24 +30,26 @@ class FollowerFragment : Fragment() {
         _binding = null
     }
 
-    private fun initAdapter(){
+    private fun initAdapter() {
 
         followerAdapter = FollowerAdapter()
+        with(binding) {
 
-        binding.rvFollower.adapter = followerAdapter
-        // 코드단에서도 레이아웃 매니저 설정가능!
+            rvFollower.adapter = followerAdapter
+            rvFollower.addItemDecoration(MyDecoration(this@FollowerFragment))
+        }
 //        binding.rvFollower.layoutManager = GridLayoutManager(this,2)
 
         followerAdapter.followerList.addAll(
 
             listOf(
-                FollowerData("이준원", "안드로이드 파트원"),
-                FollowerData("김수빈", "안드로이드 31기 파트장"),
-                FollowerData("권용민", "안드로이드 알통몬"),
-                FollowerData("최유리", "유림이는 반병.."),
-                FollowerData("최윤정", "좋아~~"),
+                FollowerData(R.drawable.man, "이준원", "안드로이드 YB"),
+                FollowerData(R.drawable.woman, "김수빈", "안드로이드 OB"),
+                FollowerData(R.drawable.man, "권용민", "안드로이드 OB"),
+                FollowerData(R.drawable.woman, "최유리", "안드로이드 YB"),
+                FollowerData(R.drawable.woman, "최윤정", "안드로이드 YB"),
 
-            )
+                )
         )
     }
 }

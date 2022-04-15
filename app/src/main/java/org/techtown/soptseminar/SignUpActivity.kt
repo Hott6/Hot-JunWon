@@ -20,10 +20,12 @@ class SignUpActivity : AppCompatActivity() {
 
         // signUp 버튼 눌렀을 때
 
-        binding.btnSignup.setOnClickListener(){
+        binding.btnSignup.setOnClickListener() {
             with(binding) {
 
-                if (!etName.text.toString().isNullOrBlank() && !etId.text.toString().isNullOrBlank() && !etPw.text.toString().isNullOrBlank()) {
+                if (!etName.text.toString().isNullOrBlank() && !etId.text.toString()
+                        .isNullOrBlank() && !etPw.text.toString().isNullOrBlank()
+                ) {
                     // finish메서드 : back 버튼과 동일한 기능 수행
                     val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
                     intent.putExtra("id", etId.text.toString())
@@ -32,7 +34,8 @@ class SignUpActivity : AppCompatActivity() {
 
                     finish() // 호출스택에서 나오기, 다시 SignUpActivity를 호출한 SignInActivity 화면으로 돌아간다.
                 } else {
-                    Toast.makeText(this@SignUpActivity, "입력되지 않은 정보가 있습니다", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignUpActivity, "입력되지 않은 정보가 있습니다", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 

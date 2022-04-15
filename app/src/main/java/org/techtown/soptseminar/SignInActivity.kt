@@ -34,24 +34,27 @@ class SignInActivity : AppCompatActivity() {
         // binding 변수를 통해 xml 파일 내의 뷰 Id 접근 가능
         binding.btnLogin.setOnClickListener() {
             // 버튼 이벤트 : 버튼 눌렀을 때 로그인 되게 하기?
-            with(binding){
+            with(binding) {
                 // if (!(id.equals("")) && !(pw.equals(""))) 와 같음
                 // 방법 1 : isNullOrBlank 메서드를 쓰는게 더 좋습니다!
                 // 방법 2 : isEmpty 메서드
 
                 // == 연산자로 비교 가능한 것으로 볼 때, new String()으로 문자열을 생성하지 않는 것 같음!
-                if (!etId.text.toString().isNullOrBlank() && !etPw.text.toString().isNullOrBlank()) {
+                if (!etId.text.toString().isNullOrBlank() && !etPw.text.toString()
+                        .isNullOrBlank()
+                ) {
                     Toast.makeText(this@SignInActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
                     startActivity(homeIntent)
-                }else{
-                    Toast.makeText(this@SignInActivity, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this@SignInActivity, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
         }
 
         // SignUp
-        binding.btnSignup.setOnClickListener(){
+        binding.btnSignup.setOnClickListener() {
 
             // 회원가입 페이지로 이동!
             startActivity(signUpIntent)
@@ -62,8 +65,8 @@ class SignInActivity : AppCompatActivity() {
         binding.etId.setText(intent.getStringExtra("id")) // intent 로부터 받아온 "id"에 해당하는 value값을 etID에 저장한다.
         binding.etPw.setText(intent.getStringExtra("pw"))
 
-        }
     }
+}
 
 
 

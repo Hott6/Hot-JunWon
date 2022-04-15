@@ -1,3 +1,3 @@
 package org.techtown.soptseminar
 
-data class FollowerData(val name : String, val introduce : String)
+data class FollowerData(val gender: Int, val name: String, val introduce: String)
