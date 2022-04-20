@@ -23,7 +23,7 @@ class RepositoryFragment : Fragment() {
         return binding.root
     }
 
-    override fun onDestroy() {
+    override fun onDestroy(){
         super.onDestroy()
         _binding = null
     }
@@ -38,7 +38,6 @@ class RepositoryFragment : Fragment() {
         }
 
         repositoryAdapter.repositoryList.addAll(
-
             listOf(
                 RepositoryData("today_junelog", "파이썬 + 자료구조/알고리즘 레포지토리"),
                 RepositoryData("Android_Bymurjune", "자바 + 코틀린 + 안스 레포지토리"),

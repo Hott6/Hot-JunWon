@@ -32,7 +32,6 @@ class HomeActivity : AppCompatActivity() {
                 position = FOLLOWER_FRAGMENT
             }
         }
-
         binding.btnRepository.setOnClickListener {
             if (position == FOLLOWER_FRAGMENT) {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_main, fragment2)

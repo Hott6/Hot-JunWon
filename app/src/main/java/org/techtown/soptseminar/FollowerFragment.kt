@@ -1,7 +1,7 @@
 package org.techtown.soptseminar
 
+import android.content.Intent
 import android.os.Bundle
-import android.service.autofill.UserData
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,25 +31,40 @@ class FollowerFragment : Fragment() {
     }
 
     private fun initAdapter() {
-
         followerAdapter = FollowerAdapter()
         with(binding) {
-
             rvFollower.adapter = followerAdapter
-            rvFollower.addItemDecoration(ItemDecoration(resources.getDimensionPixelOffset(R.dimen.margin_15), 1))
+            rvFollower.addItemDecoration(
+                ItemDecoration(
+                    resources.getDimensionPixelOffset(R.dimen.margin_15),
+                    1
+                )
+            )
         }
 //        binding.rvFollower.layoutManager = GridLayoutManager(this,2)
-
         followerAdapter.followerList.addAll(
-
             listOf(
                 FollowerData(R.drawable.man, "이준원", "안드로이드 YB"),
                 FollowerData(R.drawable.woman, "김수빈", "안드로이드 OB"),
                 FollowerData(R.drawable.man, "권용민", "안드로이드 OB"),
                 FollowerData(R.drawable.woman, "최유리", "안드로이드 YB"),
                 FollowerData(R.drawable.woman, "최윤정", "안드로이드 YB"),
-
                 )
         )
+
+        followerAdapter.setItemClickListener(object : FollowerAdapter.ItemClickListener {
+            override fun onClick(view: View, position: Int) {
+                val gender = followerAdapter.followerList[position].gender
+                val name = followerAdapter.followerList[position].name
+                val introduce = followerAdapter.followerList[position].introduce
+
+                val intent = Intent(context, DetailActivity::class.java).apply {
+                    putExtra("gender", gender)
+                    putExtra("name", name)
+                    putExtra("introduce", introduce)
+                }
+                startActivity(intent)
+            }
+        })
     }
 }
