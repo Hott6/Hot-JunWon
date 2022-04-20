@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import org.techtown.soptseminar.databinding.FragmentFollwerBinding
 
 class FollowerFragment : Fragment() {
@@ -40,6 +42,21 @@ class FollowerFragment : Fragment() {
                     1
                 )
             )
+            // myAdapter객체는 클래스 OnItemMoveListener 구현했으므로, OnItemMoveListener의 자손이다.
+            val itemTouchHelper : ItemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(followerAdapter))
+            itemTouchHelper.attachToRecyclerView(rvFollower)
+
+            //ItemTouchHelper(ItemTouchHelperCallback(myAdapter)).attachToRecyclerView((rvMyfollower))
+
+            // 생성자 ItemTouchHelper(CallBack callback)
+            // val callBack = ItemTouchHelperCallback(myAdapter) 커스텀 CallBack
+            // val itemTouchHelper = ItemTouchHelper(callBack)
+
+            followerAdapter.startDrag(object : FollowerAdapter.OnStartDragListener {
+                override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
+                    itemTouchHelper.startDrag(viewHolder)
+                }
+            })
         }
 //        binding.rvFollower.layoutManager = GridLayoutManager(this,2)
         followerAdapter.followerList.addAll(

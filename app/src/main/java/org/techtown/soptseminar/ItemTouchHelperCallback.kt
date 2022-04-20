@@ -5,8 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ItemTouchHelperCallback(private val itemMoveListener: OnItemMoveListener) :
     ItemTouchHelper.Callback() { // ItemTouchHelper.Callback()는 추상클래스
-
-
+    
     // getMovementFlags() : 이벤트의 방향을 설정, 어느 방향으로 움직 일지에 따라 flag를 정의
     override fun getMovementFlags(
         recyclerView: RecyclerView,
@@ -18,7 +17,6 @@ class ItemTouchHelperCallback(private val itemMoveListener: OnItemMoveListener) 
         return makeMovementFlags(dragFlags, swipeFlags)
 
     }
-
     //  from -> to 이동
     // onMove() : 어느 위치에서 어느 위치로 변경하는지 이벤트를 받음
     override fun onMove(
@@ -29,7 +27,6 @@ class ItemTouchHelperCallback(private val itemMoveListener: OnItemMoveListener) 
         itemMoveListener.onItemMoved(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
-
     // 삭제
     // onSwiped(): Swipe가 될 때 이벤트
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
