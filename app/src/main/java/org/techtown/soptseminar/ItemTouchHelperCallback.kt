@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ItemTouchHelperCallback(private val itemMoveListener: OnItemMoveListener) :
     ItemTouchHelper.Callback() { // ItemTouchHelper.Callback()는 추상클래스
-    
+
     // getMovementFlags() : 이벤트의 방향을 설정, 어느 방향으로 움직 일지에 따라 flag를 정의
     override fun getMovementFlags(
         recyclerView: RecyclerView,

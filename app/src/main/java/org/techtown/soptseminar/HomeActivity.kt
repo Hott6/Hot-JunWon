@@ -1,7 +1,7 @@
 package org.techtown.soptseminar
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import org.techtown.soptseminar.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -12,29 +12,28 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
-
         initTransactionEvent()
     }
 
     fun initTransactionEvent() {
 
-        val fragment1 = FollowerFragment()
-        val fragment2 = RepositoryFragment()
-
-        supportFragmentManager.beginTransaction().add(R.id.fragment_main, fragment1).commit()
+        val followerFragment = FollowerFragment()
+        val repositoryFragment = RepositoryFragment()
+        supportFragmentManager.beginTransaction().add(R.id.fragment_main, followerFragment).commit()
 
         binding.btnFollower.setOnClickListener {
             if (position == REPO_FRAGMENT) {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_main, fragment1)
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_main, followerFragment)
                     .commit()
                 position = FOLLOWER_FRAGMENT
             }
         }
         binding.btnRepository.setOnClickListener {
             if (position == FOLLOWER_FRAGMENT) {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_main, fragment2)
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.fragment_main, repositoryFragment)
                     .commit()
                 position = REPO_FRAGMENT
             }
@@ -45,5 +44,4 @@ class HomeActivity : AppCompatActivity() {
         const val FOLLOWER_FRAGMENT = 1
         const val REPO_FRAGMENT = 2
     }
-
 }
