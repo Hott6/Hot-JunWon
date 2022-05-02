@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout1"
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/profile_iv"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/img_github"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:font="@font/noto_sans_kr_bold"
+            android:text="GitHub"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_iv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/home_tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/layout1"
+        app:tabIndicatorColor="@color/sopt_main_purple"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/sopt_main_purple" />
+
+    <org.techtown.soptseminar.NestedScrollableHost
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_tablayout">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_homefragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_gray" />
+    </org.techtown.soptseminar.NestedScrollableHost>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

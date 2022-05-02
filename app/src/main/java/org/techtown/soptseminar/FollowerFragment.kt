@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import org.techtown.soptseminar.adapter.FollowerAdapter
+import org.techtown.soptseminar.data.FollowerData
 import org.techtown.soptseminar.databinding.FragmentFollwerBinding
 
 class FollowerFragment : Fragment() {
