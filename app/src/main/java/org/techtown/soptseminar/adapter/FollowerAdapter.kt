@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import org.techtown.soptseminar.ItemTouchHelperCallback
 import org.techtown.soptseminar.MyDiffUtilCallback
 import org.techtown.soptseminar.data.FollowerData
 import org.techtown.soptseminar.databinding.ItemFollowerSampleListBinding
+import java.lang.System.load
 import java.util.*
 
 class FollowerAdapter(private val itemClick: (FollowerData) -> (Unit)) :
@@ -66,9 +68,12 @@ class FollowerAdapter(private val itemClick: (FollowerData) -> (Unit)) :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(data: FollowerData) {
-            binding.ivProfile.setImageResource(data.gender)
             binding.tvName.text = data.name
             binding.tvIntroduce.text = data.introduce
+            Glide.with(binding.root)
+                .load(data.gender)
+                .circleCrop()
+                .into(binding.ivProfile)
             binding.root.setOnClickListener {
                 itemClick(data)
             }

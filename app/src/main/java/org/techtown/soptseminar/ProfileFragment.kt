@@ -1,7 +1,6 @@
 package org.techtown.soptseminar
 
 import android.os.Bundle
-import android.text.TextUtils.replace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +31,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initTransactionEvent() {
+//        childFragmentManager.beginTransaction().add().commit()
+        binding.btnFollower.isSelected = true
         childFragmentManager.commit {
             setReorderingAllowed(true)
             add<FollowerFragment>(R.id.fragment_main)
@@ -40,10 +41,13 @@ class ProfileFragment : Fragment() {
 
     private fun changeToFollowerFragment() {
         binding.btnFollower.setOnClickListener {
+            binding.btnFollower.isSelected = true
+            binding.btnRepository.isSelected = false
             if (position == REPOSITORY) {
                 childFragmentManager.commit {
                     setReorderingAllowed(true)
                     replace<FollowerFragment>(R.id.fragment_main)
+                    position = FOLLOWER
                 }
             }
         }
@@ -51,10 +55,13 @@ class ProfileFragment : Fragment() {
 
     private fun changeToRepositoryFragment() {
         binding.btnRepository.setOnClickListener {
+            binding.btnFollower.isSelected = false
+            binding.btnRepository.isSelected = true
             if (position == FOLLOWER) {
                 childFragmentManager.commit {
                     setReorderingAllowed(true)
                     replace<RepositoryFragment>(R.id.fragment_main)
+                    position = REPOSITORY
                 }
             }
         }
@@ -75,8 +82,6 @@ class ProfileFragment : Fragment() {
     companion object {
         const val FOLLOWER = 0
         const val REPOSITORY = 1
-        val FOLLOWER_FRAGMENT: String = FollowerFragment::class.java.simpleName
-        val REPOSITORY_FRAGMENT: String = RepositoryFragment::class.java.simpleName
     }
 }
 
