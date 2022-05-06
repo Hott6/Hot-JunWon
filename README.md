@@ -793,3 +793,243 @@ private fun initAdapter() {
 |:--:|:--:|:--:|
 |<img width = "400 " src= "https://user-images.githubusercontent.com/87055456/164716588-12fd025f-0f6a-4312-bab1-9905b2261443.gif">|<img width = "400 " src= "https://user-images.githubusercontent.com/87055456/164717101-8a13453d-92fb-49be-b338-a233f2e4729e.gif"> |<img width = "400 " src= "https://user-images.githubusercontent.com/87055456/164717574-7ceaf940-9fa5-444c-b221-713bf880d7c9.gif"> |
 
+# Seminar3
+
+## 필수 과제
+
+### FontFamily - 폰트 추가 (noto sans kr)
+```xml
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:font="@font/noto_sans_kr_regular"
+        android:fontWeight="400"/>
+    <font
+        android:font="@font/noto_sans_kr_bold"
+        android:fontWeight="700"/>
+    <font
+        android:font="@font/noto_sans_kr_medium"
+        android:fontWeight="500"/>
+</font-family>
+```
+- font-family를 만들어서 layout 파일에서 font를 설정할 때 편리하게 해준다. 
+- fontWeight : 같은 폰트 내의 다른 스타일을 구별할 수 있다.  
+- `includeFontPadding` : 폰트를 추가하면 자동으로 여백이 생기는 현상이 발생하기에 디자인을 적용하는데 불편함이 있다. 해당 속성을 `false`로 설정하면 여백을 없앨 수 있다.(res/values/themes)
+```xml
+<item name="android:includeFontPadding">false</item>
+```
+### Selector - 버튼 클릭시 색 바꾸기
+
+- drawable파일에 `selected`여부로 false일 때와 true일 때의 색상을 구분해준다.  
+- `selector-button`이라는 layout파일을 만들어 다른 background파일과 구분해주었다.
+```xml
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/background_button_rectangle_unclicked" android:state_selected="false" />
+    <item android:drawable="@drawable/background_button_rectangle_clicked" android:state_selected="true"/>
+</selector>
+```
+### Glide 활용하기
+- 2주차까지는 `setImageResource`메서드를 활용하여 이미지를 불러왔다면 이번 3주차에서는 `Glide` 사용하여 uri로 사진 불러와주었고, 사진을 원형으로 만들어 주었다.  
+- ViewHolder의 onBind메서드 안에 Glide를 이용해 url에서 이미지를 불러와 원형으로 그리도록 하였다.
+```kotlin
+Glide.with(binding.root)
+    .load(data.gender)
+    .circleCrop()
+    .into(binding.ivProfile)
+```
+### TapLayout
+
+```kotlin
+package org.techtown.soptseminar
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayoutMediator
+import org.techtown.soptseminar.adapter.HomeViewPagerAdapter
+import org.techtown.soptseminar.databinding.FragmentHomeBinding
+
+class HomeFragment : Fragment() {
+
+    ...
+
+    private fun initAdapter() {
+        val fragmentList = listOf(FollowerTapFragment(), FollowingTapFragment())
+
+        homeViewPagerAdapter = HomeViewPagerAdapter(this)
+        homeViewPagerAdapter.fragments.addAll(fragmentList)
+
+        binding.vpHomefragment.adapter = homeViewPagerAdapter
+    }
+
+    private fun initTabLayout() {
+        val tabLabel = listOf("팔로잉", "팔로워")
+
+        TabLayoutMediator(binding.homeTablayout, binding.vpHomefragment) { tab, position ->
+            tab.text = tabLabel[position]
+        }.attach()
+    }
+
+    ...
+}
+```
+# 성장과제
+- NestedScrollableHost.kt를 만들어준다.(feat. [Google.github](https://github.com/android/views-widgets-samples/blob/master/ViewPager2/app/src/main/java/androidx/viewpager2/integration/testapp/NestedScrollableHost.kt))  
+- 태그를 이용해 ViewPager2를 감싸준다.
+
+```xml
+<org.techtown.soptseminar.NestedScrollableHost
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/home_tablayout">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_homefragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_gray" />
+</org.techtown.soptseminar.NestedScrollableHost>
+```
+# 도전과제
+
+```kotlin
+package org.techtown.soptseminar
+
+class CameraFragment : Fragment() {
+    private var _binding: FragmentCameraBinding? = null
+    private val binding get() = _binding ?: error("바인딩에 NULL 값이 들어갔어요!!")
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentCameraBinding.inflate(inflater, container, false)
+        changeProfileImage()
+        return binding.root
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                navigateGallery()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "갤러리 접근 권한이 없습니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+    private val galleryLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK && it.data != null) {
+                val imageUri = it.data?.data
+                Glide.with(this)
+                    .load(imageUri)
+                    .into(binding.ivAttached)
+            } else if (it.resultCode == RESULT_CANCELED) {
+                Toast.makeText(requireContext(), "사진 선택이 취소되었습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun navigateGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = MediaStore.Images.Media.CONTENT_TYPE
+        galleryLauncher.launch(intent)
+    }
+
+    private fun changeProfileImage() {
+        binding.btnAttachImg.setOnClickListener {
+            when {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    navigateGallery()
+                }
+                else -> {
+                    requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
+```
+
+### 1) AndroidManifest.xml에 사진을 읽고 쓸 수 있도록 permission을 다음과 같이 추가한다.
+```xml
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
+### 2) changeProfileImage
+- changeProfileImage()를 실행하여, 접근권한을 받은 상태이면 `navigateGallery()`로 이동
+- 접근권한을 받지 못했으면, `requestPermissionLauncher.launch(Manifest.permission.  READ_EXTERNAL_STORAGE)`을 통해 접근 권한 받기  
+```kotlin
+private fun changeProfileImage() {
+        binding.btnAttachImg.setOnClickListener {
+            when {
+                ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    navigateGallery()
+                }
+                else -> {
+                    requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
+            }
+        }
+    }
+```
+### 3) navigateGallery
+```kotlin
+private fun navigateGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = MediaStore.Images.Media.CONTENT_TYPE
+        galleryLauncher.launch(intent)
+    }
+```
+- 갤러리 목록 화면은 intent를 통해 실행하는데 액션문자열을 `Intent.ACTION_PICK`로 한다.  
+
+### 4) galleryLauncher
+```kotlin
+private val galleryLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK && it.data != null) {
+                val imageUri = it.data?.data
+                Glide.with(this)
+                    .load(imageUri)
+                    .into(binding.ivAttached)
+            } else if (it.resultCode == RESULT_CANCELED) {
+                Toast.makeText(requireContext(), "사진 선택이 취소되었습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+```
+### 5) requestPermissionLauncher
+```kotlin
+private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                navigateGallery()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "갤러리 접근 권한이 없습니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+```
+## 실행화면
+<img width = "250" height ="400" src ="https://user-images.githubusercontent.com/87055456/167066381-21d29516-9fad-4266-a238-e1fd79a25a9e.gif">
+
+
