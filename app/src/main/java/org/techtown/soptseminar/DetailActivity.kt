@@ -2,6 +2,7 @@ package org.techtown.soptseminar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import org.techtown.soptseminar.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -12,9 +13,14 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDetailBinding.inflate(layoutInflater)
-        binding.ivProfile.setImageResource(intent.getIntExtra(GENDER, -1))
         binding.tvName.text = intent.getStringExtra(NAME)
         binding.tvDescription.text = intent.getStringExtra(INTRODUCE)
+
+        Glide.with(binding.root)
+            .load(intent.getStringExtra(GENDER))
+            .circleCrop()
+            .into(binding.ivProfile)
+
         setContentView(binding.root)
     }
 

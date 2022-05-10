@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import org.techtown.soptseminar.adapter.FollowerAdapter
+import org.techtown.soptseminar.data.FollowerData
 import org.techtown.soptseminar.databinding.FragmentFollwerBinding
 
 class FollowerFragment : Fragment() {
@@ -35,13 +37,15 @@ class FollowerFragment : Fragment() {
             }
             startActivity(intent)
         }
+        val man = "https://user-images.githubusercontent.com/87055456/166401884-4add5a15-42be-41ad-9d72-563f123d27b0.png"
+        val woman = "https://user-images.githubusercontent.com/87055456/166401904-764a8011-c297-4611-a1a5-e3a1f0be063b.png"
         followerAdapter.followerList.addAll(
             listOf(
-                FollowerData(R.drawable.man, "이준원", "안드로이드 YB"),
-                FollowerData(R.drawable.woman, "김수빈", "안드로이드 OB"),
-                FollowerData(R.drawable.man, "권용민", "안드로이드 OB"),
-                FollowerData(R.drawable.woman, "최유리", "안드로이드 YB"),
-                FollowerData(R.drawable.woman, "최윤정", "안드로이드 YB"),
+                FollowerData(man, "이준원", "안드로이드 YB"),
+                FollowerData(woman, "김수빈", "안드로이드 OB"),
+                FollowerData(man, "권용민", "안드로이드 OB"),
+                FollowerData(woman, "최유리", "안드로이드 YB"),
+                FollowerData(man, "최윤정", "안드로이드 YB"),
             )
         )
 
@@ -50,19 +54,13 @@ class FollowerFragment : Fragment() {
                 adapter = followerAdapter
                 addItemDecoration(
                     ItemDecoration(
-                        // xml은 dp, 코틀린 파일은 px을 쓰기 때문에 getDimensionPixelOffset을 써줘서 dp -> px로 바꿔줘버린다.
                         resources.getDimensionPixelOffset(R.dimen.margin_15),
                         1
                     )
                 )
             }
-            // myAdapter객체는 클래스 OnItemMoveListener 구현했으므로, OnItemMoveListener의 자손이다.
             val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(followerAdapter))
             itemTouchHelper.attachToRecyclerView(rvFollower)
-            // ItemTouchHelper(ItemTouchHelperCallback(myAdapter)).attachToRecyclerView((rvMyfollower))
-            // 생성자 ItemTouchHelper(CallBack callback)
-            // val callBack = ItemTouchHelperCallback(myAdapter) 커스텀 CallBack
-            // val itemTouchHelper = ItemTouchHelper(callBack)
             followerAdapter.startDrag(object : FollowerAdapter.OnStartDragListener {
                 override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
                     itemTouchHelper.startDrag(viewHolder)

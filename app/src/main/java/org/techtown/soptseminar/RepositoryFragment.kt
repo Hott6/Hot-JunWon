@@ -1,21 +1,22 @@
 package org.techtown.soptseminar
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import org.techtown.soptseminar.adapter.RepositoryAdapter
+import org.techtown.soptseminar.data.RepositoryData
 import org.techtown.soptseminar.databinding.FragmentRepositoryBinding
 
 class RepositoryFragment : Fragment() {
     private lateinit var repositoryAdapter: RepositoryAdapter
     private var _binding: FragmentRepositoryBinding? = null
     private val binding get() = _binding!!
-    // onCreateView 메서드는 반드시 있어야 한다.
-    // 이 함수는 자동 호출되며, 반환한 View객체가 화면에 출력된다.
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentRepositoryBinding.inflate(inflater, container, false)
@@ -23,7 +24,7 @@ class RepositoryFragment : Fragment() {
         return binding.root
     }
 
-    override fun onDestroy(){
+    override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
@@ -32,7 +33,12 @@ class RepositoryFragment : Fragment() {
         repositoryAdapter = RepositoryAdapter()
         with(binding) {
             rvRepository.adapter = repositoryAdapter
-            rvRepository.addItemDecoration(ItemDecoration(resources.getDimensionPixelOffset(R.dimen.margin_15), 2))
+            rvRepository.addItemDecoration(
+                ItemDecoration(
+                    resources.getDimensionPixelOffset(R.dimen.margin_15),
+                    2
+                )
+            )
             // resources : 옛날이름 getResources 메서드
             // getDimesionPixelOffset메서드 : getDimension메서드와 비슷, (부동소수점을 버림 -> int형)
         }
@@ -48,7 +54,7 @@ class RepositoryFragment : Fragment() {
                     "Hacker-Rank 인터뷰 키트 스터디 과제/발표 레포지토리"
                 ),
 
-                )
+            )
         )
     }
 }

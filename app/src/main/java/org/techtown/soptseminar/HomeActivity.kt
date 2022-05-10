@@ -2,46 +2,60 @@ package org.techtown.soptseminar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
+import org.techtown.soptseminar.adapter.HomeFollowerViewPagerAdapter
 import org.techtown.soptseminar.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private var position = FOLLOWER_FRAGMENT
+    private lateinit var homeFollowerViewPagerAdapter: HomeFollowerViewPagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initTransactionEvent()
+
+        initAdapter()
+        initBottomNavigation()
     }
 
-    fun initTransactionEvent() {
+    fun initAdapter() {
+        val fragments = listOf<Fragment>(ProfileFragment(), HomeFragment(), CameraFragment())
+        homeFollowerViewPagerAdapter = HomeFollowerViewPagerAdapter(this)
+        homeFollowerViewPagerAdapter.fragments.addAll(fragments)
+        binding.vpHome.adapter = homeFollowerViewPagerAdapter
+    }
 
-        val followerFragment = FollowerFragment()
-        val repositoryFragment = RepositoryFragment()
-        supportFragmentManager.beginTransaction().add(R.id.fragment_main, followerFragment).commit()
-
-        binding.btnFollower.setOnClickListener {
-            if (position == REPO_FRAGMENT) {
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragment_main, followerFragment)
-                    .commit()
-                position = FOLLOWER_FRAGMENT
+    fun initBottomNavigation() {
+        binding.vpHome.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.bnvHome.menu.getItem(position).isChecked = true
             }
-        }
-        binding.btnRepository.setOnClickListener {
-            if (position == FOLLOWER_FRAGMENT) {
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragment_main, repositoryFragment)
-                    .commit()
-                position = REPO_FRAGMENT
+        })
+
+        binding.bnvHome.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_profile -> {
+                    binding.vpHome.currentItem = FIRST_FRAGMENT
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_home -> {
+                    binding.vpHome.currentItem = SECOND_FRAGMENT
+                    return@setOnItemSelectedListener true
+                }
+                else -> {
+                    binding.vpHome.currentItem = THIRD_FRAGMENT
+                    return@setOnItemSelectedListener true
+                }
             }
         }
     }
 
     companion object {
-        const val FOLLOWER_FRAGMENT = 1
-        const val REPO_FRAGMENT = 2
+        const val FIRST_FRAGMENT = 0
+        const val SECOND_FRAGMENT = 1
+        const val THIRD_FRAGMENT = 2
     }
 }

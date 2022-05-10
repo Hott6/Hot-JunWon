@@ -1,6 +1,7 @@
 package org.techtown.soptseminar
 
 import androidx.recyclerview.widget.DiffUtil
+import org.techtown.soptseminar.data.FollowerData
 
 class MyDiffUtilCallback(private val oldItemList: List<Any>, private val newItemList: List<Any>) :
     DiffUtil.Callback() {
