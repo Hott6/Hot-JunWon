@@ -1030,6 +1030,6 @@ private val requestPermissionLauncher =
         }
 ```
 ## 실행화면
-<img width = "250" height ="400" src ="https://user-images.githubusercontent.com/87055456/167066381-21d29516-9fad-4266-a238-e1fd79a25a9e.gif">
+<img width = "250" height ="400" src ="https://user-images.githubusercontent.com/87055456/167545932-1acf446a-42a9-4689-be0d-a2449db21783.gif">
 
 
