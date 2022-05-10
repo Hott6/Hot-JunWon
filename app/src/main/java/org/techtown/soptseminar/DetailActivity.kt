@@ -13,8 +13,10 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDetailBinding.inflate(layoutInflater)
-        binding.tvName.text = intent.getStringExtra(NAME)
-        binding.tvDescription.text = intent.getStringExtra(INTRODUCE)
+        with(binding) {
+            tvName.text = intent.getStringExtra(NAME)
+            tvDescription.text = intent.getStringExtra(INTRODUCE)
+        }
 
         Glide.with(binding.root)
             .load(intent.getStringExtra(GENDER))

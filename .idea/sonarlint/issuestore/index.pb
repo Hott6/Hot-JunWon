@@ -5,8 +5,6 @@ Aapp/src/main/java/org/techtown/soptseminar/data/RepositoryData.kt,a/3/a36fab73
 Rapp/src/main/java/org/techtown/soptseminar/adapter/HomeFollowerViewPagerAdapter.kt,4/b/4b43834934e4dea1d7bde255ba125df94bbd0754
 o
 ?app/src/main/java/org/techtown/soptseminar/data/FollowerData.kt,a/3/a36053b6e2940ab69336d62773ba99dc387840a8
-n
->app/src/main/java/org/techtown/soptseminar/FollowerFragment.kt,4/1/41e71344d553e895a187c451b15cf568dc9ea235
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 P
@@ -21,7 +19,5 @@ r
 Bapp/src/main/java/org/techtown/soptseminar/FollowingTapFragment.kt,9/4/941ece18d321d655d8d1c4898b46e68767b44765
 q
 Aapp/src/main/java/org/techtown/soptseminar/FollowerTapFragment.kt,b/3/b3e6c207cd3015c69d96aebd23b5e1a0303a81b1
-l
-<app/src/main/java/org/techtown/soptseminar/DetailActivity.kt,c/8/c8ceb320e43b4b2af1e6cc28905814be32992b33
 l
 <app/src/main/java/org/techtown/soptseminar/CameraFragment.kt,e/9/e9f07ebfc5133cec699eeb2302ab4ad3c17273d8
