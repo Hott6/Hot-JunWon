@@ -2,15 +2,19 @@ package org.techtown.soptseminar
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.techtown.soptseminar.databinding.ActivitySigninBinding
+import org.techtown.soptseminar.week4.RequestSignInData
+import org.techtown.soptseminar.week4.ResponseSignInData
+import org.techtown.soptseminar.week4.ServiceCreator
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignInActivity : AppCompatActivity() {
 
-    // 클래스파일 이름 바꿀 때, AndroidManifest.xml의 <activity  android: name />  후, 클래스파일의 이름을 rename 해주어야 한다
-
-    // 전역변수로 지연 초기화
     private lateinit var binding: ActivitySigninBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,27 +22,44 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initLoginButton()
+        initEvent()
         initSignUpButton()
-        getUserId()
-        getUserPassword()
     }
 
-    private fun initLoginButton() {
-        val homeIntent = Intent(this, HomeActivity::class.java)
-        binding.btnLogin.setOnClickListener() {
-            with(binding) {
-                if (!etId.text.toString().isNullOrBlank() && !etPw.text.toString()
-                    .isNullOrBlank()
-                ) {
-                    Toast.makeText(this@SignInActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
-                    startActivity(homeIntent)
-                } else {
-                    Toast.makeText(this@SignInActivity, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
+    fun initEvent() {
+        binding.btnLogin.setOnClickListener {
+            loginNetWork()
         }
+    }
+
+    fun loginNetWork() {
+        val requestSignIn = RequestSignInData(
+            id = binding.etId.text.toString(),
+            password = binding.etPw.text.toString()
+        )
+
+        val call: Call<ResponseSignInData> = ServiceCreator.signInService.postSignIn(requestSignIn)
+
+        call.enqueue(object : Callback<ResponseSignInData> {
+            override fun onResponse(
+                call: Call<ResponseSignInData>,
+                responseData: Response<ResponseSignInData>
+            ) {
+                if (responseData.isSuccessful) {
+                    val data = responseData.body()?.data
+
+                    Toast.makeText(this@SignInActivity, "${data?.name}님 반갑습니다!", Toast.LENGTH_LONG)
+                        .show()
+                    startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
+                    finish()
+                } else
+                    Toast.makeText(this@SignInActivity, "로그인에 실패하셨습니다", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onFailure(call: Call<ResponseSignInData>, t: Throwable) {
+                Log.e("NetworkTest", "error:$t")
+            }
+        })
     }
 
     private fun initSignUpButton() {
@@ -47,12 +68,37 @@ class SignInActivity : AppCompatActivity() {
             startActivity(signUpIntent)
         }
     }
-
-    private fun getUserId() {
-        binding.etId.setText(intent.getStringExtra("id"))
-    }
-
-    private fun getUserPassword() {
-        binding.etPw.setText(intent.getStringExtra("pw"))
-    }
 }
+
+//    private fun initLoginButton() {
+//        val homeIntent = Intent(this, HomeActivity::class.java)
+//        binding.btnLogin.setOnClickListener() {
+//            with(binding) {
+//                if (!etId.text.toString().isNullOrBlank() && !etPw.text.toString()
+//                    .isNullOrBlank()
+//                ) {
+//                    Toast.makeText(this@SignInActivity, "로그인 성공", Toast.LENGTH_SHORT).show()
+//                    startActivity(homeIntent)
+//                } else {
+//                    Toast.makeText(this@SignInActivity, "아이디/비밀번호를 확인해주세요", Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+//            }
+//        }
+//    }
+//
+//    private fun initSignUpButton() {
+//        val signUpIntent = Intent(this, SignUpActivity::class.java)
+//        binding.btnSignup.setOnClickListener() {
+//            startActivity(signUpIntent)
+//        }
+//    }
+//
+//    private fun getUserId() {
+//        binding.etId.setText(intent.getStringExtra("id"))
+//    }
+//
+//    private fun getUserPassword() {
+//        binding.etPw.setText(intent.getStringExtra("pw"))
+//    }
+// }
