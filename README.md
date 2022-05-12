@@ -1,4 +1,12 @@
-# Seminar 1
+### THE-SOPT-30th Android Part
+## [ seminar 목차 ]
+
+[1️⃣ Seminar](#seminar1)
+
+[2️⃣ Seminar](#seminar2)
+
+[3️⃣ Seminar](#seminar3)
+# seminar1
 
 ##  SignInActivity
 ```kotlin
@@ -150,7 +158,7 @@ String폴더에 text내용을 저장한 후, 사용하면 굉장히 편리하다
 |:--:|:--:|
 |<img width = "600 " src= "https://user-images.githubusercontent.com/87055456/162427967-7fe63b60-a514-43c6-a59e-150f6656c3f2.gif">|<img width = "600 " src= "https://user-images.githubusercontent.com/87055456/162428001-f9f72df3-b4a6-4449-8132-9cba526decb1.gif"> |
 
-# Seminar 2
+# Seminar2
 # 필수과제
 
 # Fragment
@@ -788,6 +796,91 @@ private fun initAdapter() {
 - `getDimensionPixelSize()` 정수를 반환합니다. (반올림,Int) 
 두 메서드(함수)의 차이는 dp를 px로 변환하면서 소수점까지 반환하느냐, 반올림해서 정수로 반환하느냐이다.  
 추가로 `getDimensionPixelOffset`메서드는 float -> int로 변환하여 반환한다. (버림, Int형)
+
+## 도전 과제 3 - 2
+## notifyDataSetChanged
+지금까지는 `notifyDataSetChanged`메서드를 사용해서 data set이 changed 됐다는 것을 알렸다.  
+> RecyclerView에 표현할 데이터를 업데이트하기 위해 사용하였다.  
+
+그러나, `notifyDataSetChanged`메서드에는 모든 항목을 통째로 날린 후, 다시 그리는 비효율적인 방법을 사용한다.  
+## 해결책 1. 적절한 notify~ 메서드를 사용한다.
+```kotlin
+override fun onItemMoved(fromPos: Int, toPos: Int) {
+        Collections.swap(followerList, fromPos, toPos)
+        notifyItemMoved(fromPos, toPos) # position에서 아이템이 삭제되었다고 알리는 메서드
+    }
+
+    override fun onItemSwiped(pos: Int) {
+        followerList.removeAt(pos)
+        notifyItemRemoved(pos) # fromPosition에서 toPosition으로 아이템이 이동
+    }
+```
+하지만, 모든 상황에 따라 notify~메서드를 쓰는 것은 비효율적이라 할 수 있다.
+
+## 해결책 2. DiffUtil
+이에 변경된 데이터에 한해서만 adapter를 변경할수있도록 고안한것이 `diffutil 클래스`이다.  
+- DiffUtil.Callback()를 상속
+```
+diffUtil.Callback()은 추상 클래스이며 4가지 추상메서드와 1개의 비추상 메서드로 이루어져있다
+```
+- 추상 메서드(오버로딩 해주어야 함)
+- `getOldListSize()`: 이전 목록의 개수를 반환.
+- `getNewListSize()`: 새로운 목록의 개수를 반환.
+- `areItemsTheSame(int oldItemPosition, int newItemPosition)`: 두 객체가 같은 항목인지 여부를 결정
+- `areContentsTheSame(int oldItemPosition, int newItemPosition)`: 두 항목의 데이터가 같은지 여부를 결정  
+
+다음과 같이 MyDiffUtilCallback클래스를 구현해주었다.
+```kotlin
+class MyDiffUtilCallback(private val oldItemList: List<Any>, private val newItemList: List<Any>) :
+    DiffUtil.Callback() {
+    override fun getOldListSize(): Int = oldItemList.size
+
+    override fun getNewListSize(): Int = newItemList.size
+
+    // 두 리스트의 id가 같은지 확인, 여기서는 Name으로 대체
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldItemList[oldItemPosition]
+        val newItem = newItemList[newItemPosition]
+        // is는 자바에서 istanceOf , 형변환도 안해줘도 됨
+        return if (oldItem is FollowerData && newItem is FollowerData) {
+            oldItem.name == newItem.name
+        } else {
+            false
+        }
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+        oldItemList[oldItemPosition] == newItemList[newItemPosition]
+```
+### areItemsTheSame() vs areContentsTheSame() 메서드  
+
+- areItemsTheSame()  
+ 각각의 리스트에서 꺼내온 두 객체가 같은 아이템인지 확인하는 작업
+ 만일 아이템에 유일하게 식별할 수 있는(DB로 치면 Primary Key와 같은 기능을 하는) ID가 있다면, areItemsTheSame() 메서드 내에서 두 객체의 ID를 비교해주면 된다.  
+ 원래 `id`같은걸 많이하는데 예시에서는 id값이 없어서 세미나 과제에서는 `followerName`로 대체해줬다.
+ 
+ - areContentsTheSame()  
+ 두 아이템의 ID를 비교하는 것이 아닌 실제 내용물까지도 정확히 일치하는지를 확인하는 메서드다.  
+ 
+ ```
+ areItemsTheSame에서는 ID에 해당하는 필드만 비교하고, areContentsTheSame에서는 두 객체 전체를 비교해야 한다는 것을 구분해서 기억하자 :D
+ ```
+ - 따라서, itemList를 갱신할 때 다음 replaceItemList()메서드를 사용해서 리스트를 갱신한 뒤 View를 업데이트해줄 수 있다.
+ ```kotlin
+fun replaceItemList(newItemList: List<FollowerData>?) {
+        newItemList?.let {
+            val diffCallback = MyDiffUtilCallback(followerList, it)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+            followerList.run {
+                clear()
+                addAll(it)
+                diffResult.dispatchUpdatesTo(this@FollowerAdapter)
+            }
+        }
+    }
+```
+
 ## 실행화면
 |필수과제|아이템 클릭시 Detail화면으로 이동| Drag & Swipe|  
 |:--:|:--:|:--:|
