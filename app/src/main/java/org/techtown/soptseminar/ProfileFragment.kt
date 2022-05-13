@@ -41,9 +41,9 @@ class ProfileFragment : Fragment() {
 
     private fun changeToFollowerFragment() {
         binding.btnFollower.setOnClickListener {
-            binding.btnFollower.isSelected = true
-            binding.btnRepository.isSelected = false
             if (position == REPOSITORY) {
+                binding.btnFollower.isSelected = true
+                binding.btnRepository.isSelected = false
                 childFragmentManager.commit {
                     setReorderingAllowed(true)
                     replace<FollowerFragment>(R.id.fragment_main)
@@ -55,9 +55,9 @@ class ProfileFragment : Fragment() {
 
     private fun changeToRepositoryFragment() {
         binding.btnRepository.setOnClickListener {
-            binding.btnFollower.isSelected = false
-            binding.btnRepository.isSelected = true
             if (position == FOLLOWER) {
+                binding.btnFollower.isSelected = false
+                binding.btnRepository.isSelected = true
                 childFragmentManager.commit {
                     setReorderingAllowed(true)
                     replace<RepositoryFragment>(R.id.fragment_main)

@@ -1,7 +1,7 @@
 package org.techtown.soptseminar.data
 
 data class FollowerData(
-    val gender: String,
+    val image: String,
     val name: String,
-    val introduce: String
+    val introduce: String = ""
 )

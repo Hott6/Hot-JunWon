@@ -1,5 +1,7 @@
 package org.techtown.soptseminar
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -24,14 +26,34 @@ class SignUpActivity : AppCompatActivity() {
         clearSignUpButton()
     }
 
-    private fun initNetWork() {
-        val requestSignInUp = RequestSignUpData(
-            id = binding.etId.text.toString(),
-            name = binding.etName.text.toString(),
-            password = binding.etPw.text.toString()
-        )
+    private fun clearSignUpButton() {
+        with(binding) {
+            btnSignup.setOnClickListener {
+                val id = etId.text.toString()
+                val name = etName.text.toString()
+                val password = etPw.text.toString()
+                if (id.isNullOrBlank() || name.isNullOrBlank() || password.isNullOrBlank()) {
+                    Toast.makeText(this@SignUpActivity, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
+                } else {
+                    val intent = Intent(this@SignUpActivity, SignInActivity::class.java).apply {
+                        putExtra("id", etId.text.toString())
+                        putExtra("pw", etPw.text.toString())
+                    }
+                    setResult(Activity.RESULT_OK, intent)
+                    initNetWork(RequestSignUpData(id, name, password))
+                }
+            }
+        }
+    }
+
+    private fun initNetWork(requestSignUp: RequestSignUpData) {
+//        val requestSignUp = RequestSignUpData(
+//            id = binding.etId.text.toString(),
+//            name = binding.etName.text.toString(),
+//            password = binding.etPw.text.toString()
+//        )
         val call: Call<ResponseSignUpData> =
-            ServiceCreator.signUpService.postSignup(requestSignInUp)
+            ServiceCreator.soptService.postSignup(requestSignUp)
 
         call.enqueue(object : Callback<ResponseSignUpData> {
             override fun onResponse(
@@ -46,6 +68,8 @@ class SignUpActivity : AppCompatActivity() {
                         "${data?.id} 회원가입이 완료되었습니다!",
                         Toast.LENGTH_SHORT
                     ).show()
+                    finish()
+//                    startActivity(Intent(this@SignUpActivity, HomeActivity::class.java))
                 } else
                     Toast.makeText(this@SignUpActivity, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
             }
@@ -54,14 +78,6 @@ class SignUpActivity : AppCompatActivity() {
                 Log.e("NetworkText", "error:$t")
             }
         })
-    }
-    private fun clearSignUpButton() {
-        binding.btnSignup.setOnClickListener {
-            initNetWork()
-            if(!isFinishing) {
-                finish()
-            }
-        }
     }
 }
 

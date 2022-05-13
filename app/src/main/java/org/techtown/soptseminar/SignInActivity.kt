@@ -1,9 +1,11 @@
 package org.techtown.soptseminar
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import org.techtown.soptseminar.databinding.ActivitySigninBinding
 import org.techtown.soptseminar.week4.RequestSignInData
@@ -16,17 +18,26 @@ import retrofit2.Response
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySigninBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initEvent()
+        initLogin()
         initSignUpButton()
     }
 
-    fun initEvent() {
+    val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val id = it.data?.getStringExtra("id") ?: ""
+                val pw = it.data?.getStringExtra("pw") ?: ""
+                binding.etId.setText(id)
+                binding.etPw.setText(pw)
+            }
+        }
+
+    fun initLogin() {
         binding.btnLogin.setOnClickListener {
             loginNetWork()
         }
@@ -38,7 +49,7 @@ class SignInActivity : AppCompatActivity() {
             password = binding.etPw.text.toString()
         )
 
-        val call: Call<ResponseSignInData> = ServiceCreator.signInService.postSignIn(requestSignIn)
+        val call: Call<ResponseSignInData> = ServiceCreator.soptService.postSignIn(requestSignIn)
 
         call.enqueue(object : Callback<ResponseSignInData> {
             override fun onResponse(
@@ -50,8 +61,12 @@ class SignInActivity : AppCompatActivity() {
 
                     Toast.makeText(this@SignInActivity, "${data?.name}님 반갑습니다!", Toast.LENGTH_LONG)
                         .show()
-                    startActivity(Intent(this@SignInActivity, HomeActivity::class.java))
-                    finish()
+
+                    // 로그인 정보 id ->
+                    val intent = Intent(this@SignInActivity, HomeActivity::class.java).apply {
+                        putExtra("username", binding.etId.text.toString())
+                    }
+                    startActivity(intent)
                 } else
                     Toast.makeText(this@SignInActivity, "로그인에 실패하셨습니다", Toast.LENGTH_LONG).show()
             }
@@ -65,7 +80,7 @@ class SignInActivity : AppCompatActivity() {
     private fun initSignUpButton() {
         val signUpIntent = Intent(this, SignUpActivity::class.java)
         binding.btnSignup.setOnClickListener() {
-            startActivity(signUpIntent)
+            resultLauncher.launch(signUpIntent)
         }
     }
 }

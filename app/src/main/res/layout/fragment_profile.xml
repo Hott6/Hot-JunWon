@@ -41,7 +41,7 @@
         android:background="@drawable/selector_button"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:text="팔로워 목록"
-        android:textColor="@color/selector_text"
+        android:textColor="@color/sopt_main_purple"
         app:layout_constraintEnd_toStartOf="@+id/btn_Repository"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,12 +55,11 @@
         android:background="@drawable/selector_button"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:text="레포지토리 목록"
-        android:textColor="@color/selector_text"
+        android:textColor="@color/sopt_main_purple"
         app:layout_constraintBottom_toBottomOf="@id/btn_follower"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_follower"
-        app:layout_constraintTop_toTopOf="@id/btn_follower"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@id/btn_follower" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_main"

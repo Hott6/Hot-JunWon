@@ -2,13 +2,13 @@ package org.techtown.soptseminar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import org.techtown.soptseminar.adapter.HomeFollowerViewPagerAdapter
 import org.techtown.soptseminar.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
+    lateinit var userData: String
     private lateinit var binding: ActivityHomeBinding
     private lateinit var homeFollowerViewPagerAdapter: HomeFollowerViewPagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,13 +16,14 @@ class HomeActivity : AppCompatActivity() {
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        // signinActivity에서 username에 해당하는 이름 받아오기
+        userData = intent.getStringExtra("username").toString()
         initAdapter()
         initBottomNavigation()
     }
 
     fun initAdapter() {
-        val fragments = listOf<Fragment>(ProfileFragment(), HomeFragment(), CameraFragment())
+        val fragments = listOf(ProfileFragment(), HomeFragment(), CameraFragment())
         homeFollowerViewPagerAdapter = HomeFollowerViewPagerAdapter(this)
         homeFollowerViewPagerAdapter.fragments.addAll(fragments)
         binding.vpHome.adapter = homeFollowerViewPagerAdapter

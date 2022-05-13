@@ -1,15 +1,16 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
-    compileSdk 32
+    compileSdk 31
 
     defaultConfig {
         applicationId "org.techtown.soptseminar"
         minSdk 26
-        targetSdk 32
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -31,10 +32,15 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 }
 
 dependencies {
+//    // define any required OkHttp artifacts without version
+//    implementation 'com.squareup.okhttp3:okhttp:logging-interceptor'
+//    // 서버 연결을 위한 okhttp
+//    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     // 서버 연결을 위한 Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     // Retrofit2에서 gson 사용을 위한 컨버터

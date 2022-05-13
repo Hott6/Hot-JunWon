@@ -2,17 +2,21 @@ package org.techtown.soptseminar.week4
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 object ServiceCreator {
     private const val BASE_URL = "http://13.124.62.236/"
+    private const val BASE_URL_GITHUB = "https://api.github.com/"
 
-    // Retrofit 객체 생성
-    private val retrofit: Retrofit = Retrofit.Builder()
+    private val soptRetrofit: Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-    // 구현체 생성
-    val signInService: SignInService = retrofit.create(SignInService::class.java)
-    val signUpService: SignUpService = retrofit.create(SignUpService::class.java)
+
+    private val githubRetrofit: Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL_GITHUB)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val soptService: SoptService = soptRetrofit.create(SoptService::class.java)
+    val githubApiService: GithubApiService = githubRetrofit.create(GithubApiService::class.java)
 }

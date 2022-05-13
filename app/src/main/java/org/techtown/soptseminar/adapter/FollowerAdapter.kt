@@ -1,6 +1,7 @@
 package org.techtown.soptseminar.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -12,16 +13,15 @@ import org.techtown.soptseminar.ItemTouchHelperCallback
 import org.techtown.soptseminar.MyDiffUtilCallback
 import org.techtown.soptseminar.data.FollowerData
 import org.techtown.soptseminar.databinding.ItemFollowerSampleListBinding
-import java.lang.System.load
 import java.util.*
 
-class FollowerAdapter(private val itemClick: (FollowerData) -> (Unit)) :
+class FollowerAdapter(private val itemClick: ((FollowerData) -> (Unit))? = null) :
     RecyclerView.Adapter<FollowerAdapter.FollowerViewHolder>(),
     ItemTouchHelperCallback.OnItemMoveListener {
     // 드래그 리스너 선언
     private lateinit var dragListener: OnStartDragListener
 
-    val followerList =
+    var followerList =
         mutableListOf<FollowerData>()
 
     override fun getItemCount(): Int = followerList.size
@@ -64,23 +64,26 @@ class FollowerAdapter(private val itemClick: (FollowerData) -> (Unit)) :
 
     class FollowerViewHolder(
         val binding: ItemFollowerSampleListBinding,
-        private val itemClick: (FollowerData) -> (Unit)
+        private val itemClick: ((FollowerData) -> (Unit))? = null
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(data: FollowerData) {
-            binding.tvName.text = data.name
-            binding.tvIntroduce.text = data.introduce
+            Log.d("onBind:", data.toString())
+            // databinding~ 코드가 줄어듬
+            binding.follower = data
+//            binding.tvName.text = data.name
+//            binding.tvIntroduce.text = data.introduce
             Glide.with(binding.root)
-                .load(data.gender)
+                .load(data.image)
                 .circleCrop()
                 .into(binding.ivProfile)
             binding.root.setOnClickListener {
-                itemClick(data)
+                itemClick?.invoke(data)
+                // invoke() : 함수실행해주는 함수, null or data 뱉어줌
             }
         }
     }
 
-    // 성장 과제 3
     // 드래그 인터페이스
     interface OnStartDragListener {
         fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
