@@ -5,9 +5,11 @@
 
 [2️⃣ Seminar](#seminar2)
 
-[3️⃣ Seminar](#seminar3)
-# seminar1
+[3️⃣ Seminar](#seminar3)  
 
+[⚡️ Seminar 4](#seminar4)  
+
+# seminar1
 ##  SignInActivity
 ```kotlin
 class SignInActivity : AppCompatActivity() {
@@ -1126,3 +1128,345 @@ private val requestPermissionLauncher =
 <img width = "250" height ="400" src ="https://user-images.githubusercontent.com/87055456/167545932-1acf446a-42a9-4689-be0d-a2449db21783.gif">
 
 
+# Seminar4
+## 필수과제
+## 1. 로그인/회원가입 API 연동
+### PostMan Test 및 실행화면
+- 회원가입
+<img src ="https://user-images.githubusercontent.com/87055456/168290676-f9125f9b-179e-4912-923f-cd6cf5b384a1.jpg" >  
+
+<img width ="500" src="https://user-images.githubusercontent.com/87055456/168292808-e37325e8-ef21-4462-b657-d7ef2bc24459.gif" >
+- 로그인
+<img src ="https://user-images.githubusercontent.com/87055456/168291703-ff1f66bf-46ee-4fc3-b84a-ce96819ca7c9.png">  
+
+<img width ="500" src="https://user-images.githubusercontent.com/87055456/168293078-e0624cfa-ad24-41c9-bc12-be1187025d58.gif" >
+
+## retrofit 인터페이스
+- http메서드, 헤더, URI 등을 정의하는 곳이다.  
+- 서버에 어떠한 요청을 보내고(request), 요청을 받는지(respond) 정의하는 부분이다.  
+- 명세서를 보면서 필요한 부분을 넣어주면 된다~  
+```kotlin
+interface SoptService {
+    @POST("auth/signup")
+    fun postSignup(
+        @Body body: RequestSignUpData
+    ): Call<ResponseSignUpData>
+
+    @POST("auth/signin")
+    fun postSignIn(
+        @Body body: RequestSignInData
+    ): Call<ResponseSignInData>
+}
+```  
+## retrofit 구현체
+- reptrofit 인터페이스를 구현한 객체를 생성해주는 곳이다.  
+- retrofit 객체를 싱글톤으로 만들기 위해 `object`를 사용했다.
+```kotlin
+object ServiceCreator {
+    private const val BASE_URL = "http://13.124.62.236/"
+    private const val BASE_URL_GITHUB = "https://api.github.com/"
+
+    private val soptRetrofit: Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    private val githubRetrofit: Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL_GITHUB)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val soptService: SoptService = soptRetrofit.create(SoptService::class.java)
+    val githubApiService: GithubApiService = githubRetrofit.create(GithubApiService::class.java)
+}
+```    
+```kotlin
+private val soptRetrofit: Retrofit  = Retrofit.Builder()
+    .baseUrl(BASE_URL)
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
+```
+- Retrofit.Builder() : Retrofit 빌더 객체생성  
+- baseUrl : 빌더 객체의 baseUrl을 호출하고 서버의 메인 URL을 전달한다.  
+- addConverterFactory: gson컨버터를 연동해준다.  
+- build: Retrofit 객체 반환
+## Request/Respond 객체 코드
+- RequestSignInData
+```kotlin
+data class RequestSignInData(
+    @SerializedName("email") val id: String,
+    val password: String
+)
+```
+- ResponseSignInData
+```kotlin
+data class ResponseSignInData(
+    val status: Int,
+    val message: String,
+    val data: Data
+) {
+    data class Data(
+        val name: String,
+        val email: String
+    )
+}
+```
+- RequestSignUpData
+```kotlin
+data class RequestSignUpData(
+    @SerializedName("email")
+    val id: String,
+    val name: String,
+    val password: String
+)
+```
+- ResponseSignUpData
+```kotlin
+data class ResponseSignUpData(
+    val status: Int,
+    val message: String,
+    val data: Data
+) {
+    data class Data(
+        val id: Int
+    )
+}
+```
+## 성장과제 2-1
+## ResponseUserInfoData
+```kotlin
+data class ResponseUserInfoData(
+    @SerializedName("avatar_url")
+    val image: String,
+    @SerializedName("login")
+    val name: String,
+    @SerializedName("bio")
+    val introduce: String
+)
+```
+- @SerializedName 어노테이션으로 다른 이름으로 바꿔줬다
+## GithubApiService
+```kotlin
+interface GithubApiService {
+
+    @GET("users/{user_name}/repos")
+    fun getRepoInfo(
+        @Path("user_name") userName: String
+    ): Call<List<ResponseRepoInfoData>>
+
+    @GET("users/{user_name}/followers")
+    fun getFollowingInfo(
+        @Path("user_name") userName: String
+    ): Call<List<ResponseUserInfoData>>
+}
+```
+- githubApi에서 받아올 retrofit 인터페이스를 하나 더 만들어줍니다.  
+- 이때, 요청할 필요없이 받아오기만 하면 되니 @GET 어노테이션을 붙어줍니다.  
+- getFollowingInfo()의 인자에 `@Path("user_name") userName: String`으로 받아
+ 로그인하는 사람의 github정보를 받아오도록 합니다.
+## SignInActivity
+```kotlin
+class SignInActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySigninBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySigninBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        initLogin()
+        initSignUpButton()
+    }
+
+    val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val id = it.data?.getStringExtra("id") ?: ""
+                val pw = it.data?.getStringExtra("pw") ?: ""
+                binding.etId.setText(id)
+                binding.etPw.setText(pw)
+            }
+        }
+
+    fun initLogin() {
+        binding.btnLogin.setOnClickListener {
+            loginNetWork()
+        }
+    }
+
+    fun loginNetWork() {
+        val requestSignIn = RequestSignInData(
+            id = binding.etId.text.toString(),
+            password = binding.etPw.text.toString()
+        )
+
+        val call: Call<ResponseSignInData> = ServiceCreator.soptService.postSignIn(requestSignIn)
+
+        call.enqueue(object : Callback<ResponseSignInData> {
+            override fun onResponse(
+                call: Call<ResponseSignInData>,
+                responseData: Response<ResponseSignInData>
+            ) {
+                if (responseData.isSuccessful) {
+                    val data = responseData.body()?.data
+
+                    Toast.makeText(this@SignInActivity, "${data?.name}님 반갑습니다!", Toast.LENGTH_LONG)
+                        .show()
+
+                    // 로그인 정보 id ->
+                    val intent = Intent(this@SignInActivity, HomeActivity::class.java).apply {
+                        putExtra("username", binding.etId.text.toString())
+                    }
+                    startActivity(intent)
+                } else
+                    Toast.makeText(this@SignInActivity, "로그인에 실패하셨습니다", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onFailure(call: Call<ResponseSignInData>, t: Throwable) {
+                Log.e("NetworkTest", "error:$t")
+            }
+        })
+    }
+
+    private fun initSignUpButton() {
+        val signUpIntent = Intent(this, SignUpActivity::class.java)
+        binding.btnSignup.setOnClickListener() {
+            resultLauncher.launch(signUpIntent)
+        }
+    }
+}
+```
+- 1주차 성장과제에서 `registForActivityResult`메서드를 사용 안했는데, 이번에 사용해봤슴니다~  
+- responseData.isSuccessful이 true값을 얻어준다면, HomeActivity화면으로 넘어가게 해줍니다.  
+- 이때, `putExtra()`메서드를 통해 인텐트객체에 username을 담아 줍니다.  
+
+## HomeActivity
+```kotlin
+class HomeActivity : AppCompatActivity() {
+
+    lateinit var userData: String // username
+    ...
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        // signinActivity에서 username에 해당하는 이름 받아오기
+        userData = intent.getStringExtra("username").toString()
+        initAdapter()
+        initBottomNavigation()
+    }
+
+    ...
+```
+- HomeActivity에 userData라는 변수를 선언해준후, getStringExtra()메서드를 이용해 'username'을 받아 초기화시켜줍니다.
+
+## FollowerFragment
+```kotlin
+class FollowerFragment : Fragment() {
+    private lateinit var homeActivity: HomeActivity
+    private lateinit var followerAdapter: FollowerAdapter
+    private var _binding: FragmentFollwerBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // 된다
+        homeActivity = activity as HomeActivity
+        // DataBinding 적용
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_follwer, container, false)
+        // userData가 null값일 수도 있기 때문에 null처리
+        if (!homeActivity.userData.isNullOrBlank()) {
+            followerAdapter = FollowerAdapter()
+            binding.rvFollower.adapter = followerAdapter
+            Log.d("UserData:", homeActivity.userData)
+            initUserInfoNetwork(homeActivity.userData)
+        }
+        return binding.root
+    }
+
+    private fun initUserInfoNetwork(userData: String) {
+        val call: Call<List<ResponseUserInfoData>> =
+            ServiceCreator.githubApiService.getFollowingInfo(userData)
+
+        call.enqueue(object : Callback<List<ResponseUserInfoData>> {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onResponse(
+                call: Call<List<ResponseUserInfoData>>,
+                response: Response<List<ResponseUserInfoData>>
+            ) {
+                if (response.isSuccessful) {
+                    // let을 통한 널처리
+                    response.body()?.let { data ->
+                        Log.d("tracking?", data.toString())
+                        data.forEach {
+                            followerAdapter.followerList.add(
+                                FollowerData(
+                                    image = it.image,
+                                    name = it.name,
+                                    introduce = it.introduce ?: "NULL",
+                                )
+                            )
+                        }
+                    }
+                    followerAdapter.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(requireContext(), "깃허브 팔로워 조회 실패", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<ResponseUserInfoData>>, t: Throwable) {
+                Log.e("NetworkTest", "error:$t") // 오류처리 코드
+            }
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
+```
+- it : ResponseUserInfoData  
+- data : List<ResponseUserInfoData> , it이 두개가 나오기 때문에 둘 중 하나는 이름을 정해주어야 한다.  
+- ResponseUserInfoData의 정보를 FollowerData()생성자에 넣어준 후, 객체를 followerData에 담아준다.  
+- `introduce = it.introduce ?: "NULL"` introduce가 없는 사람도 있을 수 있으니 엘비스 연산자로 널처리~  
+## 성장과제 2 : Wrapper 클래스
+
+- 모든 Response data class에서 계속 공통되는 부분이 있다.  
+- 이 공통되는 부분을 Wrapper(지네릭)클래스로 만들고, 타입변수 data를 만들어준다.
+```kotlin
+data class ResponseWrapper<T>(
+    val status: Int,
+    val message: String,
+    val data: T?
+)
+```
+- ResponseSignInDat와 ResponseSignUpData에서 공통되는 부분을 지워준다.  
+```kotlin
+data class ResponseSignUpData(
+    val id: Int
+)
+
+data class ResponseSignInData(
+    val name: String,
+    val email: String
+)
+```
+- 타입 T에 기존의 ResponseSignInData와 ResponseSignUpData를 넣어준다.  
+- 이해가 잘안가면 T를 다음과 같이 ResponseSignInData로 치환해주면 된다.
+```kotlin
+data class ResponseWrapper<ResponseSignInData>(
+    val status: Int,
+    val message: String,
+    val data: ResponseSignInData
+)
+```
+- SignInActivity와 SignUpActivity에서도 Call<Response..Data> 부분을 Call<ResponseWrapper<Response..Data>>로 바꿔주면 된다.  
+
+## 실행화면  
+- 정말 어이없게도, 제 'murjune'아이디의 비밀번호를 까먹어서.. 윤정님의 깃허브아이디로 로그인하는 화면을 보여드리겠슴니다..
+<img width ="500" src="https://user-images.githubusercontent.com/87055456/168293336-d4e041c1-e5ac-4652-83bd-1461681c869b.gif" >
