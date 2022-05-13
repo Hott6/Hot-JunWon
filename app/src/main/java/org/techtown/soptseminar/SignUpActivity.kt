@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import org.techtown.soptseminar.databinding.ActivitySignupBinding
 import org.techtown.soptseminar.week4.RequestSignUpData
 import org.techtown.soptseminar.week4.ResponseSignUpData
+import org.techtown.soptseminar.week4.ResponseWrapper
 import org.techtown.soptseminar.week4.ServiceCreator
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,13 +53,13 @@ class SignUpActivity : AppCompatActivity() {
 //            name = binding.etName.text.toString(),
 //            password = binding.etPw.text.toString()
 //        )
-        val call: Call<ResponseSignUpData> =
+        val call: Call<ResponseWrapper<ResponseSignUpData>> =
             ServiceCreator.soptService.postSignup(requestSignUp)
 
-        call.enqueue(object : Callback<ResponseSignUpData> {
+        call.enqueue(object : Callback<ResponseWrapper<ResponseSignUpData>> {
             override fun onResponse(
-                call: Call<ResponseSignUpData>,
-                response: Response<ResponseSignUpData>
+                call: Call<ResponseWrapper<ResponseSignUpData>>,
+                response: Response<ResponseWrapper<ResponseSignUpData>>
             ) {
                 if (response.isSuccessful) {
                     val data = response.body()?.data
@@ -74,7 +75,7 @@ class SignUpActivity : AppCompatActivity() {
                     Toast.makeText(this@SignUpActivity, "회원가입에 실패하셨습니다", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onFailure(call: Call<ResponseSignUpData>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseWrapper<ResponseSignUpData>>, t: Throwable) {
                 Log.e("NetworkText", "error:$t")
             }
         })

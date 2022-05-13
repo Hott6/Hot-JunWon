@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import org.techtown.soptseminar.databinding.ActivitySigninBinding
 import org.techtown.soptseminar.week4.RequestSignInData
 import org.techtown.soptseminar.week4.ResponseSignInData
+import org.techtown.soptseminar.week4.ResponseWrapper
 import org.techtown.soptseminar.week4.ServiceCreator
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,12 +50,12 @@ class SignInActivity : AppCompatActivity() {
             password = binding.etPw.text.toString()
         )
 
-        val call: Call<ResponseSignInData> = ServiceCreator.soptService.postSignIn(requestSignIn)
+        val call: Call<ResponseWrapper<ResponseSignInData>> = ServiceCreator.soptService.postSignIn(requestSignIn)
 
-        call.enqueue(object : Callback<ResponseSignInData> {
+        call.enqueue(object : Callback<ResponseWrapper<ResponseSignInData>> {
             override fun onResponse(
-                call: Call<ResponseSignInData>,
-                responseData: Response<ResponseSignInData>
+                call: Call<ResponseWrapper<ResponseSignInData>>,
+                responseData: Response<ResponseWrapper<ResponseSignInData>>
             ) {
                 if (responseData.isSuccessful) {
                     val data = responseData.body()?.data
@@ -71,7 +72,7 @@ class SignInActivity : AppCompatActivity() {
                     Toast.makeText(this@SignInActivity, "로그인에 실패하셨습니다", Toast.LENGTH_LONG).show()
             }
 
-            override fun onFailure(call: Call<ResponseSignInData>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseWrapper<ResponseSignInData>>, t: Throwable) {
                 Log.e("NetworkTest", "error:$t")
             }
         })

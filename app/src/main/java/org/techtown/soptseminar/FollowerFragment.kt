@@ -21,7 +21,6 @@ import retrofit2.Response
 class FollowerFragment : Fragment() {
     private lateinit var homeActivity: HomeActivity
     private lateinit var followerAdapter: FollowerAdapter
-    val followerData = mutableListOf<FollowerData>()
     private var _binding: FragmentFollwerBinding? = null
     private val binding get() = _binding!!
 
@@ -36,7 +35,6 @@ class FollowerFragment : Fragment() {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_follwer, container, false)
         if (!homeActivity.userData.isNullOrBlank()) {
             followerAdapter = FollowerAdapter()
-            followerAdapter.followerList = followerData
             binding.rvFollower.adapter = followerAdapter
             Log.d("UserData:", homeActivity.userData)
             initUserInfoNetwork(homeActivity.userData)
@@ -58,7 +56,7 @@ class FollowerFragment : Fragment() {
                     response.body()?.let { data ->
                         Log.d("tracking?", data.toString())
                         data.forEach {
-                            followerData.add(
+                            followerAdapter.followerList.add(
                                 FollowerData(
                                     image = it.image,
                                     name = it.name,
@@ -66,6 +64,7 @@ class FollowerFragment : Fragment() {
                                 )
                             )
                         }
+                        followerAdapter.notifyDataSetChanged()
                     }
                     followerAdapter.notifyDataSetChanged()
                 } else {
