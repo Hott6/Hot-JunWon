@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import org.techtown.soptseminar.adapter.FollowerAdapter
@@ -21,6 +22,7 @@ import retrofit2.Response
 class FollowerFragment : Fragment() {
     private lateinit var homeActivity: HomeActivity
     private lateinit var followerAdapter: FollowerAdapter
+    var responseDataSet = mutableListOf<FollowerData>()
     private var _binding: FragmentFollwerBinding? = null
     private val binding get() = _binding!!
 
@@ -29,13 +31,9 @@ class FollowerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // 된다
         homeActivity = activity as HomeActivity
-        // DataBinding 적용??
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_follwer, container, false)
         if (!homeActivity.userData.isNullOrBlank()) {
-            followerAdapter = FollowerAdapter()
-            binding.rvFollower.adapter = followerAdapter
             Log.d("UserData:", homeActivity.userData)
             initUserInfoNetwork(homeActivity.userData)
         }
@@ -56,7 +54,7 @@ class FollowerFragment : Fragment() {
                     response.body()?.let { data ->
                         Log.d("tracking?", data.toString())
                         data.forEach {
-                            followerAdapter.followerList.add(
+                            responseDataSet.add(
                                 FollowerData(
                                     image = it.image,
                                     name = it.name,
@@ -64,9 +62,8 @@ class FollowerFragment : Fragment() {
                                 )
                             )
                         }
-                        followerAdapter.notifyDataSetChanged()
                     }
-                    followerAdapter.notifyDataSetChanged()
+                    initAdapter()
                 } else {
                     Toast.makeText(requireContext(), "깃허브 팔로워 조회 실패", Toast.LENGTH_LONG).show()
                 }
@@ -76,6 +73,11 @@ class FollowerFragment : Fragment() {
                 Log.e("NetworkTest", "error:$t") // 오류처리 코드
             }
         })
+    }
+
+    private fun initAdapter() {
+        followerAdapter = FollowerAdapter()
+        binding.rvFollower.adapter = followerAdapter.apply { submitList(responseDataSet) }
     }
 
     override fun onDestroyView() {

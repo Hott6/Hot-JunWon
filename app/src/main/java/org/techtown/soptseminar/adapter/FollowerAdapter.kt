@@ -7,24 +7,19 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.techtown.soptseminar.ItemTouchHelperCallback
-import org.techtown.soptseminar.MyDiffUtilCallback
 import org.techtown.soptseminar.data.FollowerData
 import org.techtown.soptseminar.databinding.ItemFollowerSampleListBinding
 import java.util.*
 
 class FollowerAdapter(private val itemClick: ((FollowerData) -> (Unit))? = null) :
-    RecyclerView.Adapter<FollowerAdapter.FollowerViewHolder>(),
+    ListAdapter<FollowerData, RecyclerView.ViewHolder>(follwerDiffUtil),
     ItemTouchHelperCallback.OnItemMoveListener {
     // 드래그 리스너 선언
     private lateinit var dragListener: OnStartDragListener
-
-    var followerList =
-        mutableListOf<FollowerData>()
-
-    override fun getItemCount(): Int = followerList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowerViewHolder {
 
@@ -38,27 +33,15 @@ class FollowerAdapter(private val itemClick: ((FollowerData) -> (Unit))? = null)
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
-        holder.binding.ivDraghandle.setOnTouchListener { view: View, event: MotionEvent ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                dragListener.onStartDrag(holder)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is FollowerViewHolder) {
+            holder.binding.ivDraghandle.setOnTouchListener { view: View, event: MotionEvent ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    dragListener.onStartDrag(holder)
+                }
+                return@setOnTouchListener false
             }
-            return@setOnTouchListener false
-        }
-        holder.onBind(followerList[position])
-    }
-
-    // diffUtill 부분
-    fun replaceItemList(newItemList: List<FollowerData>?) {
-        newItemList?.let {
-            val diffCallback = MyDiffUtilCallback(followerList, it)
-            val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-            followerList.run {
-                clear()
-                addAll(it)
-                diffResult.dispatchUpdatesTo(this@FollowerAdapter)
-            }
+            holder.onBind(getItem(position))
         }
     }
 
@@ -69,10 +52,7 @@ class FollowerAdapter(private val itemClick: ((FollowerData) -> (Unit))? = null)
 
         fun onBind(data: FollowerData) {
             Log.d("onBind:", data.toString())
-            // databinding~ 코드가 줄어듬
             binding.follower = data
-//            binding.tvName.text = data.name
-//            binding.tvIntroduce.text = data.introduce
             Glide.with(binding.root)
                 .load(data.image)
                 .circleCrop()
@@ -94,12 +74,26 @@ class FollowerAdapter(private val itemClick: ((FollowerData) -> (Unit))? = null)
     }
 
     override fun onItemMoved(fromPos: Int, toPos: Int) {
-        Collections.swap(followerList, fromPos, toPos)
-        notifyItemMoved(fromPos, toPos)
+        val newList = currentList.toMutableList()
+        Collections.swap(newList, fromPos, toPos)
+        submitList(newList)
     }
 
     override fun onItemSwiped(pos: Int) {
-        followerList.removeAt(pos)
-        notifyItemRemoved(pos)
+        val newList = currentList.toMutableList()
+        newList.removeAt(pos)
+        submitList(newList)
+    }
+
+    companion object {
+        private val follwerDiffUtil = object : DiffUtil.ItemCallback<FollowerData>() {
+            override fun areItemsTheSame(oldItem: FollowerData, newItem: FollowerData): Boolean {
+                return oldItem.name === newItem.name
+            }
+
+            override fun areContentsTheSame(oldItem: FollowerData, newItem: FollowerData): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }

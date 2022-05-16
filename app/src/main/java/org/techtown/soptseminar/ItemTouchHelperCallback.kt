@@ -15,8 +15,8 @@ class ItemTouchHelperCallback(private val itemMoveListener: OnItemMoveListener) 
         val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
         return makeMovementFlags(dragFlags, swipeFlags)
-
     }
+
     //  from -> to 이동
     // onMove() : 어느 위치에서 어느 위치로 변경하는지 이벤트를 받음
     override fun onMove(
@@ -27,6 +27,7 @@ class ItemTouchHelperCallback(private val itemMoveListener: OnItemMoveListener) 
         itemMoveListener.onItemMoved(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
+
     // 삭제
     // onSwiped(): Swipe가 될 때 이벤트
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
