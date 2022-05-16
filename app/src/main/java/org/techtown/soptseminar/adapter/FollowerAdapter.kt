@@ -59,7 +59,6 @@ class FollowerAdapter(private val itemClick: ((FollowerData) -> (Unit))? = null)
                 .into(binding.ivProfile)
             binding.root.setOnClickListener {
                 itemClick?.invoke(data)
-                // invoke() : 함수실행해주는 함수, null or data 뱉어줌
             }
         }
     }

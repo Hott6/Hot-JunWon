@@ -35,3 +35,9 @@ P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 o
 ?app/src/main/java/org/techtown/soptseminar/week4/SoptService.kt,3/a/3acc705ec34f3162484fbf14a43a26e05411beac
+q
+Aapp/src/main/java/org/techtown/soptseminar/FollowerTapFragment.kt,b/3/b3e6c207cd3015c69d96aebd23b5e1a0303a81b1
+r
+Bapp/src/main/java/org/techtown/soptseminar/FollowingTapFragment.kt,9/4/941ece18d321d655d8d1c4898b46e68767b44765
+z
+Japp/src/main/java/org/techtown/soptseminar/adapter/HomeViewPagerAdapter.kt,7/7/77756e68eec21a515a2d9e7255aed94d21a76a02

@@ -28,7 +28,7 @@ class SignInActivity : AppCompatActivity() {
         initSignUpButton()
     }
 
-    val resultLauncher =
+    private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val id = it.data?.getStringExtra("id") ?: ""
@@ -38,13 +38,13 @@ class SignInActivity : AppCompatActivity() {
             }
         }
 
-    fun initLogin() {
+    private fun initLogin() {
         binding.btnLogin.setOnClickListener {
             loginNetWork()
         }
     }
 
-    fun loginNetWork() {
+    private fun loginNetWork() {
         val requestSignIn = RequestSignInData(
             id = binding.etId.text.toString(),
             password = binding.etPw.text.toString()

@@ -1,6 +1,5 @@
 package org.techtown.soptseminar
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -36,9 +35,9 @@ class FollowerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeActivity = activity as HomeActivity
+        val userData = (requireActivity() as? HomeActivity)?.userData
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_follwer, container, false)
-        if (!homeActivity.userData.isNullOrBlank()) {
+        if (!userData.isNullOrBlank()) {
             Log.d("UserData:", homeActivity.userData)
             initUserInfoNetwork(homeActivity.userData)
         }
@@ -50,15 +49,14 @@ class FollowerFragment : Fragment() {
             ServiceCreator.githubApiService.getFollowingInfo(userData)
 
         call.enqueue(object : Callback<List<ResponseUserInfoData>> {
-            @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(
                 call: Call<List<ResponseUserInfoData>>,
                 response: Response<List<ResponseUserInfoData>>
             ) {
                 if (response.isSuccessful) {
-                    response.body()?.let { data ->
-                        Log.d("tracking?", data.toString())
-                        data.forEach {
+                    response.body()?.let { dataList ->
+                        Log.d("tracking?", dataList.toString())
+                        dataList.forEach {
                             responseDataSet.add(
                                 FollowerData(
                                     image = it.image,
@@ -81,18 +79,23 @@ class FollowerFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        followerAdapter = FollowerAdapter {
-            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
-                putExtra(IMAGE, it.image)
-                putExtra(NAME, it.name)
-                putExtra(INTRODUCE, it.introduce)
-            }
-            startActivity(intent)
-        }
+        // 고차함수로 넘겨보자
+//        followerAdapter = FollowerAdapter() { data: FollowerData -> itemClick(data) }
+        followerAdapter = FollowerAdapter { itemClick(it) }
         binding.rvFollower.adapter = followerAdapter.apply { submitList(responseDataSet) }
         initItemDecorarion()
         initItemTouch()
     }
+
+    private fun itemClick(data: FollowerData) {
+        val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+            putExtra(IMAGE, data.image)
+            putExtra(NAME, data.name)
+            putExtra(INTRODUCE, data.introduce)
+        }
+        startActivity(intent)
+    }
+
     // TODO ItemDecoration에서 getItemOffsets말고 다른 메서드로 구현해보기
     private fun initItemDecorarion() {
         binding.rvFollower.addItemDecoration(

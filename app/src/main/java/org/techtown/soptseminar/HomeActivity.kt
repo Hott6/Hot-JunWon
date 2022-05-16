@@ -22,14 +22,11 @@ class HomeActivity : AppCompatActivity() {
         initBottomNavigation()
     }
 
-    fun initAdapter() {
-        val fragments = listOf(ProfileFragment(), HomeFragment(), CameraFragment())
-        homeFollowerViewPagerAdapter = HomeFollowerViewPagerAdapter(this)
-        homeFollowerViewPagerAdapter.fragments.addAll(fragments)
-        binding.vpHome.adapter = homeFollowerViewPagerAdapter
+    private fun initAdapter() {
+        binding.vpHome.adapter = HomeFollowerViewPagerAdapter(this)
     }
 
-    fun initBottomNavigation() {
+    private fun initBottomNavigation() {
         binding.vpHome.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 binding.bnvHome.menu.getItem(position).isChecked = true
@@ -39,24 +36,18 @@ class HomeActivity : AppCompatActivity() {
         binding.bnvHome.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_profile -> {
-                    binding.vpHome.currentItem = FIRST_FRAGMENT
+                    binding.vpHome.currentItem = 0
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_home -> {
-                    binding.vpHome.currentItem = SECOND_FRAGMENT
+                    binding.vpHome.currentItem = 1
                     return@setOnItemSelectedListener true
                 }
                 else -> {
-                    binding.vpHome.currentItem = THIRD_FRAGMENT
+                    binding.vpHome.currentItem = 2
                     return@setOnItemSelectedListener true
                 }
             }
         }
-    }
-
-    companion object {
-        const val FIRST_FRAGMENT = 0
-        const val SECOND_FRAGMENT = 1
-        const val THIRD_FRAGMENT = 2
     }
 }
