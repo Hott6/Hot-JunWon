@@ -1,15 +1,20 @@
 package org.techtown.soptseminar
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import org.techtown.soptseminar.DetailActivity.Companion.IMAGE
+import org.techtown.soptseminar.DetailActivity.Companion.INTRODUCE
+import org.techtown.soptseminar.DetailActivity.Companion.NAME
 import org.techtown.soptseminar.adapter.FollowerAdapter
 import org.techtown.soptseminar.data.FollowerData
 import org.techtown.soptseminar.databinding.FragmentFollwerBinding
@@ -76,8 +81,36 @@ class FollowerFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        followerAdapter = FollowerAdapter()
+        followerAdapter = FollowerAdapter {
+            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                putExtra(IMAGE, it.image)
+                putExtra(NAME, it.name)
+                putExtra(INTRODUCE, it.introduce)
+            }
+            startActivity(intent)
+        }
         binding.rvFollower.adapter = followerAdapter.apply { submitList(responseDataSet) }
+        initItemDecorarion()
+        initItemTouch()
+    }
+    // TODO ItemDecoration에서 getItemOffsets말고 다른 메서드로 구현해보기
+    private fun initItemDecorarion() {
+        binding.rvFollower.addItemDecoration(
+            ItemDecoration(
+                resources.getDimensionPixelOffset(R.dimen.margin_15),
+                1
+            )
+        )
+    }
+
+    private fun initItemTouch() {
+        val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(followerAdapter))
+        itemTouchHelper.attachToRecyclerView(binding.rvFollower)
+        followerAdapter.startDrag(object : FollowerAdapter.OnStartDragListener {
+            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
+                itemTouchHelper.startDrag(viewHolder)
+            }
+        })
     }
 
     override fun onDestroyView() {

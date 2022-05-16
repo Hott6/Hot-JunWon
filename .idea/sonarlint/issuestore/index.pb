@@ -1,8 +1,6 @@
 
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-l
-<app/src/main/java/org/techtown/soptseminar/ItemDecoration.kt,1/3/1395ad32fe5fdb80986047e82cb0798739d80f06
 p
 @app/src/main/java/org/techtown/soptseminar/RepositoryFragment.kt,1/c/1cdf3b059148b52eae9f9048350418943d19599a
 q
@@ -37,5 +35,3 @@ P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 o
 ?app/src/main/java/org/techtown/soptseminar/week4/SoptService.kt,3/a/3acc705ec34f3162484fbf14a43a26e05411beac
-o
-?app/src/main/java/org/techtown/soptseminar/data/FollowerData.kt,a/3/a36053b6e2940ab69336d62773ba99dc387840a8

@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/layout_background"
-        android:layout_marginBottom="16dp"
         android:padding="10dp">
 
 

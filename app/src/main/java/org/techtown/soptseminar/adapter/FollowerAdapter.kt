@@ -35,7 +35,7 @@ class FollowerAdapter(private val itemClick: ((FollowerData) -> (Unit))? = null)
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is FollowerViewHolder) {
-            holder.binding.ivDraghandle.setOnTouchListener { view: View, event: MotionEvent ->
+            holder.binding.ivDraghandle.setOnTouchListener { _: View, event: MotionEvent ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     dragListener.onStartDrag(holder)
                 }
