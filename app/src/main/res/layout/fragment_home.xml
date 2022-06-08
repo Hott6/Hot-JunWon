@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".presentation.home.HomeFragment">
 
     <ImageView
         android:id="@+id/profile_iv"
@@ -38,7 +38,7 @@
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/sopt_main_purple" />
 
-    <org.techtown.soptseminar.NestedScrollableHost
+    <org.techtown.soptseminar.util.NestedScrollableHost
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,6 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background_gray" />
-    </org.techtown.soptseminar.NestedScrollableHost>
+    </org.techtown.soptseminar.util.NestedScrollableHost>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

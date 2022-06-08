@@ -7,7 +7,7 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2984375" />
         <entry key="app/src/main/res/drawable/background_button_rectangle.xml" value="0.287962962962963" />
         <entry key="app/src/main/res/drawable/background_button_rectangle_clicked.xml" value="0.18385416666666668" />
-        <entry key="app/src/main/res/drawable/background_button_rectangle_unclicked.xml" value="0.287962962962963" />
+        <entry key="app/src/main/res/drawable/background_button_rectangle_unclicked.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/drag_handle.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_android_black.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_drag_handle_24.xml" value="0.31145833333333334" />
@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/drawable/ic_img_github.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.17552083333333332" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/drawable/ic_settings_applications_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/layout_background.xml" value="0.29583333333333334" />
         <entry key="app/src/main/res/drawable/rectangle_basic_radius_10.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/drawable/rectangle_radius_10.xml" value="0.16927083333333334" />
@@ -24,9 +25,11 @@
         <entry key="app/src/main/res/font/noto_snas_kr.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.27898550724637683" />
         <entry key="app/src/main/res/layout/activity_empty2.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1006073010801914" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.26759033203125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_sample.xml" value="0.2109375" />
+        <entry key="app/src/main/res/layout/activity_sample_navi.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_signin.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_signup.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_view_pager_sample.xml" value="0.264945652173913" />
@@ -36,9 +39,10 @@
         <entry key="app/src/main/res/layout/fragment_following_tap.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_follwer.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.19920094683223152" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3347759001845613" />
         <entry key="app/src/main/res/layout/fragment_repository.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/fragment_sample_one.xml" value="0.20677083333333332" />
+        <entry key="app/src/main/res/layout/fragment_sample_one.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_sample_three.xml" value="0.22102005570023153" />
         <entry key="app/src/main/res/layout/fragment_sample_two.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/layout/fragment_tap.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_test1.xml" value="0.264945652173913" />

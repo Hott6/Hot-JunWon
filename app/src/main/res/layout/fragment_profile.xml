@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".presentation.profile.ProfileFragment">
 
     <ImageView
         android:id="@+id/iv_profile"
@@ -17,6 +17,15 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/ic_settings_applications_24"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -41,7 +50,7 @@
         android:background="@drawable/selector_button"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:text="팔로워 목록"
-        android:textColor="@color/selector_text"
+        android:textColor="@color/sopt_main_purple"
         app:layout_constraintEnd_toStartOf="@+id/btn_Repository"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,12 +64,11 @@
         android:background="@drawable/selector_button"
         android:fontFamily="@font/noto_sans_kr_medium"
         android:text="레포지토리 목록"
-        android:textColor="@color/selector_text"
+        android:textColor="@color/sopt_main_purple"
         app:layout_constraintBottom_toBottomOf="@id/btn_follower"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_follower"
-        app:layout_constraintTop_toTopOf="@id/btn_follower"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@id/btn_follower" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_main"

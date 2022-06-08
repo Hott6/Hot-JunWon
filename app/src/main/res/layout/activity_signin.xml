@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignInActivity">
+    tools:context=".presentation.SignInActivity">
 
     <TextView
         android:id="@+id/tv_sopt"
@@ -46,6 +46,20 @@
         app:layout_constraintTop_toBottomOf="@id/tv_id"
 
         />
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/ckb_auto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="5dp"
+        android:checked="true"
+        android:text="자동로그인"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/et_id"
+        app:layout_constraintEnd_toEndOf="@id/et_id"
+        app:layout_constraintStart_toEndOf="@id/tv_sopt" />
+
+
 
     <TextView
         android:id="@+id/tv_password"
