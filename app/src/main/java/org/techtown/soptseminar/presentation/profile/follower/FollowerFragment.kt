@@ -37,9 +37,7 @@ class FollowerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d(TAG, "FollowerFragment - onCreateView() called")
         val userData = (requireActivity() as? HomeActivity)?.userData
-        Log.d(TAG, "FollowerFragment - onCreateView() - $userData")
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_follwer, container, false)
         if (!userData.isNullOrBlank()) {
             initUserInfoNetwork(userData)
@@ -48,7 +46,6 @@ class FollowerFragment : Fragment() {
     }
 
     private fun initUserInfoNetwork(userData: String) {
-        Log.d(TAG, "FollowerFragment - initUserInfoNetwork() called")
         val call: Call<List<ResponseUserInfoData>> =
             ServiceCreator.githubApiService.getFollowingInfo(userData)
 
@@ -83,13 +80,8 @@ class FollowerFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        // 고차함수로 넘겨보자
-//        followerAdapter = FollowerAdapter() { data: FollowerData -> itemClick(data) }
-        Log.d(TAG, "FollowerFragment - initAdapter() called")
         followerAdapter = FollowerAdapter { onItemClick(it) }
-        Log.d(TAG, "FollowerFragment - initAdapter() - $followerAdapter")
         binding.rvFollower.adapter = followerAdapter.apply { submitList(responseDataSet.toMutableList()) }
-        Log.d(TAG, "FollowerFragment - initAdapter() - ${followerAdapter.currentList}")
         initItemDecorarion()
         initItemTouch()
     }
@@ -131,45 +123,3 @@ class FollowerFragment : Fragment() {
         const val TAG = "로그"
     }
 }
-// private fun initAdapter() {
-//        followerAdapter = FollowerAdapter {
-//            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
-//                putExtra(GENDER, it.gender)
-//                putExtra(NAME, it.name)
-//                putExtra(INTRODUCE, it.introduce)
-//            }
-//            startActivity(intent)
-//        }
-//        val man =
-//            "https://user-images.githubusercontent.com/87055456/166401884-4add5a15-42be-41ad-9d72-563f123d27b0.png"
-//        val woman =
-//            "https://user-images.githubusercontent.com/87055456/166401904-764a8011-c297-4611-a1a5-e3a1f0be063b.png"
-//        followerAdapter.followerList.addAll(
-//            listOf(
-//                FollowerData(man, "이준원", "안드로이드 YB"),
-//                FollowerData(woman, "김수빈", "안드로이드 OB"),
-//                FollowerData(man, "권용민", "안드로이드 OB"),
-//                FollowerData(woman, "최유리", "안드로이드 YB"),
-//                FollowerData(man, "최윤정", "안드로이드 YB"),
-//            )
-//        )
-//
-//        with(binding) {
-//            with(rvFollower) {
-//                adapter = followerAdapter
-//                addItemDecoration(
-//                    ItemDecoration(
-//                        resources.getDimensionPixelOffset(R.dimen.margin_15),
-//                        1
-//                    )
-//                )
-//            }
-//            val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(followerAdapter))
-//            itemTouchHelper.attachToRecyclerView(rvFollower)
-//            followerAdapter.startDrag(object : FollowerAdapter.OnStartDragListener {
-//                override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
-//                    itemTouchHelper.startDrag(viewHolder)
-//                }
-//            })
-//        }
-//    }
