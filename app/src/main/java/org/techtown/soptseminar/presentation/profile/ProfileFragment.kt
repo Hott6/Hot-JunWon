@@ -97,10 +97,3 @@ class ProfileFragment : Fragment() {
         const val REPOSITORY = 1
     }
 }
-
-/*
-transaction
-    .replace(R.id.fragment_main, followerFragment)
-    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-    .commit()
-*/
