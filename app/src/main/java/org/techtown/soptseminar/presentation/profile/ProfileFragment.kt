@@ -1,5 +1,6 @@
 package org.techtown.soptseminar.presentation.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.replace
 import com.bumptech.glide.Glide
 import org.techtown.soptseminar.R
 import org.techtown.soptseminar.databinding.FragmentProfileBinding
+import org.techtown.soptseminar.presentation.SettingActivity
 import org.techtown.soptseminar.presentation.profile.follower.FollowerFragment
 import org.techtown.soptseminar.presentation.profile.repo.RepositoryFragment
 
@@ -29,8 +31,16 @@ class ProfileFragment : Fragment() {
         initTransactionEvent()
         changeToFollowerFragment()
         changeToRepositoryFragment()
+        setOnclickSetting()
         initImage()
         return binding.root
+    }
+
+    private fun setOnclickSetting() {
+        binding.ivSetting.setOnClickListener {
+            val intent = Intent(requireContext(), SettingActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initTransactionEvent() {
