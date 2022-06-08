@@ -1,6 +1,7 @@
 package org.techtown.soptseminar.util
 
 import android.util.Log
+import android.widget.Toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,7 +14,6 @@ fun <ResponseType> Call<ResponseType>.enqueueUtil(
         override fun onResponse(call: Call<ResponseType>, response: Response<ResponseType>) {
             if (response.isSuccessful) {
                 onSuccess.invoke(response.body() ?: return)
-                response.body() ?: return
             } else {
                 onError?.invoke(response.code())
             }
