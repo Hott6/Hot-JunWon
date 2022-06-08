@@ -19,8 +19,6 @@ w
 Gapp/src/main/java/org/techtown/soptseminar/adapter/RepositoryAdapter.kt,2/7/27ed905cf21dd7420965eeafccaa3acb45f5ff91
 u
 Eapp/src/main/java/org/techtown/soptseminar/adapter/FollowerAdapter.kt,6/d/6db9713882e05e0740bf36372436486ad62631d0
-l
-<app/src/main/java/org/techtown/soptseminar/util/ToastUtil.kt,d/7/d75be64608739021645eed664a3cce2a6354e998
 q
 Aapp/src/main/java/org/techtown/soptseminar/data/RepositoryData.kt,a/3/a36fab73863ff7ebf9bd8b921365a846395c11e3
 o
