@@ -11,17 +11,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import org.techtown.soptseminar.R
+import org.techtown.soptseminar.data.api.ServiceCreator
+import org.techtown.soptseminar.data.entity.FollowerData
+import org.techtown.soptseminar.data.entity.follower.ResponseUserInfoData
+import org.techtown.soptseminar.databinding.FragmentFollwerBinding
+import org.techtown.soptseminar.presentation.DetailActivity
 import org.techtown.soptseminar.presentation.DetailActivity.Companion.IMAGE
 import org.techtown.soptseminar.presentation.DetailActivity.Companion.INTRODUCE
 import org.techtown.soptseminar.presentation.DetailActivity.Companion.NAME
-import org.techtown.soptseminar.data.entity.FollowerData
-import org.techtown.soptseminar.databinding.FragmentFollwerBinding
-import org.techtown.soptseminar.util.showToast
-import org.techtown.soptseminar.data.entity.follower.ResponseUserInfoData
-import org.techtown.soptseminar.data.api.ServiceCreator
-import org.techtown.soptseminar.presentation.DetailActivity
 import org.techtown.soptseminar.presentation.HomeActivity
 import org.techtown.soptseminar.presentation.profile.ItemDecoration
+import org.techtown.soptseminar.util.showToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,16 +37,18 @@ class FollowerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, "FollowerFragment - onCreateView() called")
         val userData = (requireActivity() as? HomeActivity)?.userData
+        Log.d(TAG, "FollowerFragment - onCreateView() - $userData")
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_follwer, container, false)
         if (!userData.isNullOrBlank()) {
-            Log.d("UserData:", userData)
             initUserInfoNetwork(userData)
         }
         return binding.root
     }
 
     private fun initUserInfoNetwork(userData: String) {
+        Log.d(TAG, "FollowerFragment - initUserInfoNetwork() called")
         val call: Call<List<ResponseUserInfoData>> =
             ServiceCreator.githubApiService.getFollowingInfo(userData)
 
@@ -83,8 +85,11 @@ class FollowerFragment : Fragment() {
     private fun initAdapter() {
         // 고차함수로 넘겨보자
 //        followerAdapter = FollowerAdapter() { data: FollowerData -> itemClick(data) }
+        Log.d(TAG, "FollowerFragment - initAdapter() called")
         followerAdapter = FollowerAdapter { onItemClick(it) }
-        binding.rvFollower.adapter = followerAdapter.apply { submitList(responseDataSet) }
+        Log.d(TAG, "FollowerFragment - initAdapter() - $followerAdapter")
+        binding.rvFollower.adapter = followerAdapter.apply { submitList(responseDataSet.toMutableList()) }
+        Log.d(TAG, "FollowerFragment - initAdapter() - ${followerAdapter.currentList}")
         initItemDecorarion()
         initItemTouch()
     }
@@ -121,6 +126,9 @@ class FollowerFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    companion object {
+        const val TAG = "로그"
     }
 }
 // private fun initAdapter() {

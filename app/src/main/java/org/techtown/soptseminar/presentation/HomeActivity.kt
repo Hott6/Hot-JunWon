@@ -1,11 +1,13 @@
 package org.techtown.soptseminar.presentation
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import org.techtown.soptseminar.R
-import org.techtown.soptseminar.presentation.home.HomeFollowerViewPagerAdapter
 import org.techtown.soptseminar.databinding.ActivityHomeBinding
+import org.techtown.soptseminar.presentation.home.HomeFollowerViewPagerAdapter
 
 class HomeActivity : AppCompatActivity() {
 
@@ -19,6 +21,8 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         // signinActivity에서 username에 해당하는 이름 받아오기
         userData = intent.getStringExtra("username").toString()
+        Log.d(TAG, "HomeActivity - onCreate() called")
+        Log.d(TAG, "HomeActivity - onCreate() - $userData")
         initAdapter()
         initBottomNavigation()
     }
@@ -50,5 +54,8 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    companion object {
+        const val TAG = "로그"
     }
 }
