@@ -2,29 +2,31 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.techtown.soptseminar">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SoptSeminar">
+        android:theme="@style/Theme.SoptSeminar"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".DetailActivity"
+            android:name=".sample.SampleNaviActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".presentation.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".presentation.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".SignInActivity"
+            android:name=".presentation.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

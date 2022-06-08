@@ -37,10 +37,9 @@ android {
 }
 
 dependencies {
-//    // define any required OkHttp artifacts without version
-//    implementation 'com.squareup.okhttp3:okhttp:logging-interceptor'
-//    // 서버 연결을 위한 okhttp
-//    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    // 네비게이션컴포넌트를 쓰기위해
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
     // 서버 연결을 위한 Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     // Retrofit2에서 gson 사용을 위한 컨버터
