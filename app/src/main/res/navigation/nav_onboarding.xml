@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_sample"
+    app:startDestination="@id/onBoardingFragmentOne">
+
+    <fragment
+        android:id="@+id/onBoardingFragmentOne"
+        android:name="org.techtown.soptseminar.presentation.onboarding.OnBoardingFragmentOne"
+        android:label="fragment_sample_one"
+        tools:layout="@layout/fragment_onboading_one">
+        <action
+            android:id="@+id/action_onBoardingFragmentOne_to_onBoardingFragmentTwo"
+            app:destination="@id/onBoardingFragmentTwo" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragmentTwo"
+        android:name="org.techtown.soptseminar.presentation.onboarding.OnBoardingFragmentTwo"
+        android:label="fragment_sample_two"
+        tools:layout="@layout/fragment_onboarding_two" >
+        <action
+            android:id="@+id/action_onBoardingFragmentTwo_to_onBoardingFragmentThree"
+            app:destination="@id/onBoardingFragmentThree" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFragmentThree"
+        android:name="org.techtown.soptseminar.presentation.onboarding.OnBoardingFragmentThree"
+        android:label="fragment_sample_three"
+        tools:layout="@layout/fragment_onboarding_three" >
+        <action
+            android:id="@+id/action_onBoardingFragmentThree_to_signInActivity"
+            app:destination="@id/signInActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/signInActivity"
+        android:name="org.techtown.soptseminar.presentation.SignInActivity"
+        android:label="activity_signin"
+        tools:layout="@layout/activity_signin" />
+</navigation>

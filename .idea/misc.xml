@@ -27,6 +27,7 @@
         <entry key="app/src/main/res/layout/activity_empty2.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.26759033203125" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_onboading.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_sample.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/activity_sample_navi.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_setting.xml" value="0.335" />
@@ -39,6 +40,9 @@
         <entry key="app/src/main/res/layout/fragment_following_tap.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_follwer.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_onboading_one.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_onboarding_three.xml" value="0.2947916666666667" />
+        <entry key="app/src/main/res/layout/fragment_onboarding_two.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3347759001845613" />
         <entry key="app/src/main/res/layout/fragment_repository.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_sample_one.xml" value="0.1" />

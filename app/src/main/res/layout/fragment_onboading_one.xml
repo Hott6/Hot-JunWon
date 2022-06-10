@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/sopt_sub_purple"
-    tools:context=".sample.SampleFragmentOne">
+    tools:context=".presentation.onboarding.OnBoardingFragmentOne">
 
     <TextView
         android:id="@+id/tv_top"

@@ -1,12 +1,4 @@
 
-v
-Fapp/src/main/java/org/techtown/soptseminar/sample/SampleFragmentOne.kt,5/7/5728ea6341a21e78bdc13e67bda7210f3fcfe91c
-x
-Happ/src/main/java/org/techtown/soptseminar/sample/SampleFragmentThree.kt,7/e/7e981b3799e2160945a3b3de1e283dffac5e8259
-v
-Fapp/src/main/java/org/techtown/soptseminar/sample/SampleFragmentTwo.kt,3/2/329ae675fb3a39cb8bcc6344191fe0cf0e316e5c
-w
-Gapp/src/main/java/org/techtown/soptseminar/sample/SampleNaviActivity.kt,1/b/1b5fdad2a1dcb46d06c8c21866c85ead70707b29
 u
 Eapp/src/main/java/org/techtown/soptseminar/data/api/ServiceCreator.kt,b/f/bf7ade1414738a977567b53c684ee2718b235965
 w
@@ -15,12 +7,8 @@ y
 Iapp/src/main/java/org/techtown/soptseminar/presentation/SignUpActivity.kt,9/f/9ff68c6df563ace0900306aa070f1848b28fbd4d
 y
 Iapp/src/main/java/org/techtown/soptseminar/presentation/DetailActivity.kt,4/d/4d95eda64cfb7592687fa9556f4ead2790727da8
-Ä
-Papp/src/main/java/org/techtown/soptseminar/presentation/camera/CameraFragment.kt,f/3/f35063f183e773f5047b23a0a34ae259b4c0f8f3
 É
 Sapp/src/main/java/org/techtown/soptseminar/presentation/home/FollowerTapFragment.kt,f/f/ffba5b5833e20b772abcbd539e1a8300a1a6e633
-Ñ
-Tapp/src/main/java/org/techtown/soptseminar/presentation/home/FollowingTapFragment.kt,9/8/9805628111c8e9427fc8dda30d5f287d724020f3
 Å
 Qapp/src/main/java/org/techtown/soptseminar/presentation/profile/ItemDecoration.kt,b/4/b4ad3a4f327dbebcd92cfa45e8ec7a68fede3629
 w
@@ -45,16 +33,12 @@ Yapp/src/main/java/org/techtown/soptseminar/data/entity/repository/ResponseRepoI
 capp/src/main/java/org/techtown/soptseminar/presentation/profile/follower/ItemTouchHelperCallback.kt,5/1/516f3071b3b11546412e7d060e1ad39a57f3af69
 ã
 [app/src/main/java/org/techtown/soptseminar/presentation/profile/follower/FollowerAdapter.kt,7/7/778a14d44503a72aa179d1e92472a74d07a62737
-ä
-Zapp/src/main/java/org/techtown/soptseminar/presentation/profile/repo/RepositoryFragment.kt,1/4/147dec83c06ebb93bb5722f5a919de96f3db327a
 â
 Yapp/src/main/java/org/techtown/soptseminar/presentation/profile/repo/RepositoryAdapter.kt,5/b/5b91e40cf23f18388f91cb2675fff4c3422dc310
 å
 \app/src/main/java/org/techtown/soptseminar/presentation/home/HomeFollowerViewPagerAdapter.kt,f/e/fe4e828703f6e85c1f5f09545ee464e6c50128e8
 
 Oapp/src/main/java/org/techtown/soptseminar/presentation/HomeViewPagerAdapter.kt,d/0/d06e0dae504cc10d460f65d84387c5d704fd9775
-|
-Lapp/src/main/java/org/techtown/soptseminar/presentation/home/HomeFragment.kt,1/c/1c8d4ae61efb3fb742bd023e3093b00592781777
 r
 Bapp/src/main/java/org/techtown/soptseminar/util/ResponseWrapper.kt,7/1/7106277da1c06e6f71bb05d71ca8eac3d3e92353
 l
@@ -67,3 +51,23 @@ Bapp/src/main/java/org/techtown/soptseminar/data/api/SoptService.kt,f/1/f14f559
 app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
+z
+Japp/src/main/java/org/techtown/soptseminar/presentation/SettingActivity.kt,7/b/7bd645c70f8ed7fecc2dc691010c7806f37b3709
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+ä
+Zapp/src/main/java/org/techtown/soptseminar/presentation/profile/repo/RepositoryFragment.kt,1/4/147dec83c06ebb93bb5722f5a919de96f3db327a
+x
+Happ/src/main/java/org/techtown/soptseminar/util/SignSharedPreferences.kt,6/f/6f50c9f2d33e9790e92855f113b679f8fae7157c
+y
+Iapp/src/main/java/org/techtown/soptseminar/presentation/SignInActivity.kt,e/6/e6f50050e1d8948ebce6a642e30a1880cdcf81c6
+Ñ
+Tapp/src/main/java/org/techtown/soptseminar/presentation/home/FollowingTapFragment.kt,9/8/9805628111c8e9427fc8dda30d5f287d724020f3
+å
+\app/src/main/java/org/techtown/soptseminar/presentation/profile/follower/FollowerFragment.kt,6/6/6617fd54bba8c04ad346b5b5e444547d29457a0f
+Ç
+Rapp/src/main/java/org/techtown/soptseminar/presentation/profile/ProfileFragment.kt,d/6/d60553cdcf001ddef9292955995180906e060505
+Ä
+Papp/src/main/java/org/techtown/soptseminar/presentation/camera/CameraFragment.kt,f/3/f35063f183e773f5047b23a0a34ae259b4c0f8f3
+|
+Lapp/src/main/java/org/techtown/soptseminar/presentation/home/HomeFragment.kt,1/c/1c8d4ae61efb3fb742bd023e3093b00592781777
