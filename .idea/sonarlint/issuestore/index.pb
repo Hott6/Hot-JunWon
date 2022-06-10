@@ -31,8 +31,6 @@ Wapp/src/main/java/org/techtown/soptseminar/data/entity/follower/ResponseUserInf
 Yapp/src/main/java/org/techtown/soptseminar/data/entity/repository/ResponseRepoInfoData.kt,6/8/68669655b60947277b01317f20948711250192d9
 “
 capp/src/main/java/org/techtown/soptseminar/presentation/profile/follower/ItemTouchHelperCallback.kt,5/1/516f3071b3b11546412e7d060e1ad39a57f3af69
-‹
-[app/src/main/java/org/techtown/soptseminar/presentation/profile/follower/FollowerAdapter.kt,7/7/778a14d44503a72aa179d1e92472a74d07a62737
 ‰
 Yapp/src/main/java/org/techtown/soptseminar/presentation/profile/repo/RepositoryAdapter.kt,5/b/5b91e40cf23f18388f91cb2675fff4c3422dc310
 Œ
@@ -47,8 +45,6 @@ n
 >app/src/main/java/org/techtown/soptseminar/util/ResonseUtil.kt,7/8/78472b519f96e3e9446b265d096d72478250e59d
 r
 Bapp/src/main/java/org/techtown/soptseminar/data/api/SoptService.kt,f/1/f14f559b9bd81195d39ca136e36e2bc965aec3e8
-@
-app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 z
@@ -63,10 +59,6 @@ y
 Iapp/src/main/java/org/techtown/soptseminar/presentation/SignInActivity.kt,e/6/e6f50050e1d8948ebce6a642e30a1880cdcf81c6
 „
 Tapp/src/main/java/org/techtown/soptseminar/presentation/home/FollowingTapFragment.kt,9/8/9805628111c8e9427fc8dda30d5f287d724020f3
-Œ
-\app/src/main/java/org/techtown/soptseminar/presentation/profile/follower/FollowerFragment.kt,6/6/6617fd54bba8c04ad346b5b5e444547d29457a0f
-‚
-Rapp/src/main/java/org/techtown/soptseminar/presentation/profile/ProfileFragment.kt,d/6/d60553cdcf001ddef9292955995180906e060505
 €
 Papp/src/main/java/org/techtown/soptseminar/presentation/camera/CameraFragment.kt,f/3/f35063f183e773f5047b23a0a34ae259b4c0f8f3
 |

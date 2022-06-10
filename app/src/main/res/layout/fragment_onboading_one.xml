@@ -4,30 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sopt_sub_purple"
     tools:context=".presentation.onboarding.OnBoardingFragmentOne">
 
     <TextView
-        android:id="@+id/tv_top"
+        android:id="@+id/tv_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="상당 바"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/noto_sans_kr_bold"
+        android:text="@string/welcome_github"
+        android:textAlignment="center"
+        android:textColor="@color/sopt_main_purple"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iv_github"
+        app:layout_constraintStart_toStartOf="@+id/iv_github"
+        app:layout_constraintTop_toBottomOf="@+id/iv_github" />
+
+    <ImageView
+        android:id="@+id/iv_github"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/img_github"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/btn_next"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/black"
-        android:text="다음"
+        android:layout_margin="@dimen/margin_20"
+        android:fontFamily="@font/noto_sans_kr_regular"
+        android:paddingVertical="@dimen/margin_10"
+        android:text="@string/next_onboarding"
+        android:textAlignment="center"
         android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_top"/>
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
