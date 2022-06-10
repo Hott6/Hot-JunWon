@@ -20,7 +20,7 @@
         <entry key="app/src/main/res/drawable/layout_background.xml" value="0.29583333333333334" />
         <entry key="app/src/main/res/drawable/rectangle_basic_radius_10.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/drawable/rectangle_radius_10.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/drawable/selector_button.xml" value="0.287962962962963" />
+        <entry key="app/src/main/res/drawable/selector_button.xml" value="0.2011444091796875" />
         <entry key="app/src/main/res/font/noto_sans_kr.xml" value="0.2518518518518518" />
         <entry key="app/src/main/res/font/noto_snas_kr.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.27898550724637683" />
@@ -41,9 +41,9 @@
         <entry key="app/src/main/res/layout/fragment_follwer.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_onboading_one.xml" value="0.2947916666666667" />
-        <entry key="app/src/main/res/layout/fragment_onboarding_three.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_onboarding_three.xml" value="0.267108154296875" />
         <entry key="app/src/main/res/layout/fragment_onboarding_two.xml" value="0.17395833333333333" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3347759001845613" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.24026143485253004" />
         <entry key="app/src/main/res/layout/fragment_repository.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_sample_one.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_sample_three.xml" value="0.22102005570023153" />

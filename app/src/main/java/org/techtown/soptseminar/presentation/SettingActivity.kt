@@ -1,5 +1,6 @@
 package org.techtown.soptseminar.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
@@ -15,6 +16,9 @@ class SettingActivity : AppCompatActivity() {
 
         binding.layoutLogout.setOnClickListener {
             SignSharedPreferences.clearAll(this)
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }
