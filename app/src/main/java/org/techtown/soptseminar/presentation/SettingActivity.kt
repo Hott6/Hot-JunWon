@@ -13,7 +13,7 @@ class SettingActivity : AppCompatActivity() {
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnClear.setOnClickListener {
+        binding.layoutLogout.setOnClickListener {
             SignSharedPreferences.clearAll(this)
         }
     }

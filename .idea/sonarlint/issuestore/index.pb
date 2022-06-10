@@ -47,8 +47,6 @@ r
 Bapp/src/main/java/org/techtown/soptseminar/data/api/SoptService.kt,f/1/f14f559b9bd81195d39ca136e36e2bc965aec3e8
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
-z
-Japp/src/main/java/org/techtown/soptseminar/presentation/SettingActivity.kt,7/b/7bd645c70f8ed7fecc2dc691010c7806f37b3709
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 Š
