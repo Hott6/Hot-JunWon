@@ -1,14 +1,15 @@
 ### THE-SOPT-30th Android Part
 ## [ seminar 목차 ]
 
-[1️⃣ Seminar](#seminar1)
+[⚡️ Seminar 1](#seminar1)
 
-[2️⃣ Seminar](#seminar2)
+[⚡️ Seminar 2](#seminar2)
 
-[3️⃣ Seminar](#seminar3)  
+[⚡️ Seminar 3](#seminar3)  
 
-[⚡️ Seminar 4](#seminar4)  
+[⚡️ Seminar 4](#seminar4)
 
+[⚡️ Seminar 7](#seminar7)  
 # seminar1
 ##  SignInActivity
 ```kotlin
@@ -1470,3 +1471,271 @@ data class ResponseWrapper<ResponseSignInData>(
 ## 실행화면  
 - 정말 어이없게도, 제 'murjune'아이디의 비밀번호를 까먹어서.. 윤정님의 깃허브아이디로 로그인하는 화면을 보여드리겠슴니다..
 <img width ="500" src="https://user-images.githubusercontent.com/87055456/168293336-d4e041c1-e5ac-4652-83bd-1461681c869b.gif" >
+    
+# Seminar7
+## 필수과제 1-1 : 자동 로그인 구현
+- SignSharedPreferences
+```kotlin
+object SignSharedPreferences {
+    private const val GITHUB_SIGN_IN = "my_github_sign_in"
+    private const val ID = "id"
+    private const val AUTO_MODE = "auto_mode"
+    private const val PW = "pw"
+
+    fun setUserId(context: Context, input: String) {
+        context.getSharedPreferences(GITHUB_SIGN_IN, Context.MODE_PRIVATE).edit().apply {
+            putString(ID, input)
+            apply()
+        }
+    }
+
+    fun setAutoMode(context: Context, boolean: Boolean) {
+        context.getSharedPreferences(GITHUB_SIGN_IN, Context.MODE_PRIVATE)
+            .edit()
+            .putBoolean(AUTO_MODE, boolean)
+            .apply()
+    }
+
+    fun getAutoMode(context: Context): Boolean {
+        return context.getSharedPreferences(GITHUB_SIGN_IN, Context.MODE_PRIVATE)
+            .getBoolean(AUTO_MODE, false)
+    }
+
+    fun getUserId(context: Context) =
+        context.getSharedPreferences(GITHUB_SIGN_IN, Context.MODE_PRIVATE)
+            .getString(ID, "")
+
+    fun setUserPassWord(context: Context, input: String) {
+        context.getSharedPreferences(GITHUB_SIGN_IN, Context.MODE_PRIVATE)
+            .edit()
+            .putString(PW, input)
+            .apply()
+    }
+
+    fun getUserPassword(context: Context) =
+        context.getSharedPreferences(GITHUB_SIGN_IN, Context.MODE_PRIVATE)
+            .getString(PW, "")
+
+    fun clearAll(context: Context) {
+        context.getSharedPreferences(GITHUB_SIGN_IN, Context.MODE_PRIVATE)
+            .edit()
+            .clear()
+            .apply()
+    }
+}
+```
+- 앱 전역에서 호출 가능하도록 싱글톤으로 구현  
+- GITHUB_SIGN_IN: 저장공간에 접근하기 위한 key값
+- AutoMode : 자동로그인이 활성화되었는지 위한 key값
+- ID: 사용자의 id가 저장되었는지 확인하기 위한 key값 
+- Password: 사용자의 password을 저장하기 위해 key값  
+- getter와 setter를 구현해주었다.
+## SignInActivity
+```kotlin
+class SignInActivity : AppCompatActivity() {
+    ...
+    
+    private fun setOnClickLoginButton() {
+        binding.btnLogin.setOnClickListener {
+            val id = binding.etId.text.toString()
+            val pw = binding.etPw.text.toString()
+            loginNetWork(id, pw)
+        }
+    }
+
+    private fun setOnSignUpButton() {
+        val signUpIntent = Intent(this, SignUpActivity::class.java)
+        binding.btnSignup.setOnClickListener() {
+            resultLauncher.launch(signUpIntent)
+        }
+    }
+
+    private fun initAutoLogin() {
+        val id = SignSharedPreferences.getUserId(this)!!
+        val pw = SignSharedPreferences.getUserPassword(this)!!
+
+        if (SignSharedPreferences.getAutoMode(this)) {
+            loginNetWork(id, pw)
+        }
+    }
+
+    private fun loginNetWork(id: String, pw: String) {
+        val requestSignIn = RequestSignInData(
+            id = id,
+            password = pw
+        )
+
+        val call: Call<ResponseWrapper<ResponseSignInData>> =
+            ServiceCreator.soptService.postSignIn(requestSignIn)
+
+        call.enqueueUtil(
+            onSuccess = {
+                if (binding.ckbAuto.isChecked) {
+                    SignSharedPreferences.setUserId(this, id)
+                    SignSharedPreferences.setUserPassWord(this, pw)
+                    SignSharedPreferences.setAutoMode(this, true)
+                }
+                showToast("${it.data?.name}님 반갑습니다!")
+                val intent = Intent(this@SignInActivity, HomeActivity::class.java).apply {
+                    putExtra("username", id)
+                }
+                startActivity(intent)
+                finish()
+            },
+            onError = {
+                showToast("서버통신실패 실패하셨습니다")
+            }
+        )
+    }
+}
+```
+- AutoMode값이 true일 때  
+    - 저장된 id값과 password값을 loginNetWork의 인자에 보내준다.  
+- AutoMode값이 false일 때
+    - 자동로그인box가 check되어있는 경우  
+        - 1. editText에 있는 id값과 password을 loginNetWork의 인자에 보내준다.  
+        - 2.  id값과 password을 저장해주고, id값을 putExtra로 담아준 후, homeActivity로 intent한다.
+    - 자동로그인box가 check되어있지 않은 경우  
+        - 1. id값을 putExtra로 담아준 후,homeActivity로 intent한다.
+
+## 필수과제 1-2 : 자동 로그인 해제 구현  
+- SettingActivity
+```kotlin
+class SettingActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySettingBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySettingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.layoutLogout.setOnClickListener {
+            SignSharedPreferences.clearAll(this)
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+}
+```
+- SignSharedPreferences.clear()메서드를 통해 로컬에 저장된 모든 값을 지워준 후, 다시 로그인화면으로 간다.  
+## 성장과제 : 온보딩화면 만들기
+- activity_onboarding
+```kotlin
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.onboarding.OnBoardingActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_onboarding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:paddingVertical="20dp"
+            android:text="@string/onboarding"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/container_onboarding"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_title"
+            app:navGraph="@navigation/nav_onboarding" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+- 1. FragmentContainerView에 NavHostFragment 지정
+- 2. `app:defaultNavHost="true"`: 백버튼 로직을 가로챌 수 있게 해주는 속성
+- 3. `app:navGraph="@navigation/nav_onboarding"`: nav그래프를 가져온다. 
+
+- OnBoardingActivity
+```kotlin
+class OnBoardingActivity : AppCompatActivity() {
+    
+    ...
+    private fun initOnBoarding() {
+        if (SignSharedPreferences.getAutoMode(this)) {
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    ...
+}
+```
+- `SignSharedPreferences.getAutoMode(this)`값이 true이면 바로, 로그인 화면으로 가도록한다~  
+
+## 추가로 공부한 것!!
+### apply() vs commit()
+```java
+ public abstract boolean commit ()   //  API 1
+
+public abstract void apply ()  // API 9
+```  
+- commit는 저장여부를 boolean타입으로 반환
+- apply는 동일하지만, 반환값이 없다.
+
+단순하게 생각해보면 commit()을 쓰는게 더 좋을 것 같다. 그러나, commit()이 존재하는데 왜 API 9에서 apply()라는 메서드가 나왔을까??  
+그 이유는 `동기/비동기`에 있다.
+```
+- 공식문서
+commit(), which writes its preferences out to persistent storage synchronously,
+apply() commits its changes to the in-memory SharedPreferences immediately
+but starts an asynchronous commit to disk and you won't be notified of any failures  
+
+As SharedPreferences instances are singletons within a process,
+it's safe to replace any instance of commit() with apply() 
+if you were already ignoring the return value.
+```  
+- commit(): 호출 시 UI쓰레드는 `block`되고, 파일 저장이 완료된 후에야 UI쓰레드가 다시 작동된다.(동기적)
+- apply() : 호출되자 마자 return된다. 백그라운드에서 실행되기 때문에 UI쓰레드가 `block`되지 않음.(비동기적)
+
+apply()는 결과값을 알 수 없지만, 굳이 결과값을 알고 싶지 않으면 apply()를 써주는게 더 안전하다:D  
+### ShapeableImageView
+- material ShapeableImageView
+```xml
+<com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_github"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:padding="2dp"
+        android:src="@drawable/img_github"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:shapeAppearanceOverlay="@style/CornerSize50Percent"
+        app:strokeColor="@color/sopt_main_purple"
+        app:strokeWidth="3dp" />
+```  
+ShapeableImageView를 사용하여 쉽게 circle을 만들었다~    
+<img src="https://user-images.githubusercontent.com/87055456/173077602-afbcd51c-9ec0-4528-989c-41275094e9f2.png">  
+
+## 실행화면
+|자동로그인	| 자동로그인 해제 |	온보딩 |
+|:--:|:--:|:--:|
+|<img width= 600 src="https://user-images.githubusercontent.com/87055456/173079751-b8542b85-5913-4e51-a288-bfcf4c86d9fd.gif">   | <img width= 600 src="https://user-images.githubusercontent.com/87055456/173080078-6b5c43b0-8254-4e6a-a5f6-1edf5e9e791d.gif">|<img width= 600 src="https://user-images.githubusercontent.com/87055456/173079484-6b9fd17a-cac5-4890-8dbf-d9a755e9e9cf.gif">|
+
+갑자기.. 제 에뮬 or 안스에 문제가 생긴것 같습니다. GLide로 image뷰 넣어줄 때 image가 에뮬에 안떠요.. 다른 분들은 제 코드로 돌렸을 때 image잘 뜬다고 하는데 거참..
