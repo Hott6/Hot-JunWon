@@ -1611,13 +1611,15 @@ class SettingActivity : AppCompatActivity() {
         binding.layoutLogout.setOnClickListener {
             SignSharedPreferences.clearAll(this)
             val intent = Intent(this, SignInActivity::class.java)
+            // 현재 HomeActivity가 백스택에 저장되어 있는 상태, 따라서 기존의 스택을 비워줘야한다.
+            finishAffinity()
             startActivity(intent)
-            finish()
         }
     }
 }
 ```
 - SignSharedPreferences.clear()메서드를 통해 로컬에 저장된 모든 값을 지워준 후, 다시 로그인화면으로 간다.  
+    - finishAffinity()를 통해 액티비티가 담겨있는 백스택을 비워준다.
 ## 성장과제 : 온보딩화면 만들기
 - activity_onboarding
 ```kotlin
@@ -1686,7 +1688,7 @@ class OnBoardingActivity : AppCompatActivity() {
 - `SignSharedPreferences.getAutoMode(this)`값이 true이면 바로, 로그인 화면으로 가도록한다~  
 
 ## 추가로 공부한 것!!
-### apply() vs commit()
+### 1. apply() vs commit()
 ```java
  public abstract boolean commit ()   //  API 1
 
@@ -1710,9 +1712,9 @@ if you were already ignoring the return value.
 - commit(): 호출 시 UI쓰레드는 `block`되고, 파일 저장이 완료된 후에야 UI쓰레드가 다시 작동된다.(동기적)
 - apply() : 호출되자 마자 return된다. 백그라운드에서 실행되기 때문에 UI쓰레드가 `block`되지 않음.(비동기적)
 
-apply()는 결과값을 알 수 없지만, 굳이 결과값을 알고 싶지 않으면 apply()를 써주는게 더 안전하다:D  
-### ShapeableImageView
-- material ShapeableImageView
+apply()는 결과값을 알 수 없지만, 굳이 결과값을 알고 싶지 않으면 apply()를 써주는게 더 안전하다:D   
+    
+### 2. material ShapeableImageView
 ```xml
 <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_github"
@@ -1733,9 +1735,33 @@ apply()는 결과값을 알 수 없지만, 굳이 결과값을 알고 싶지 않
 ShapeableImageView를 사용하여 쉽게 circle을 만들었다~    
 <img src="https://user-images.githubusercontent.com/87055456/173077602-afbcd51c-9ec0-4528-989c-41275094e9f2.png">  
 
-## 실행화면
-|자동로그인	| 자동로그인 해제 |	온보딩 |
-|:--:|:--:|:--:|
-|<img width= 600 src="https://user-images.githubusercontent.com/87055456/173079751-b8542b85-5913-4e51-a288-bfcf4c86d9fd.gif">   | <img width= 600 src="https://user-images.githubusercontent.com/87055456/173080078-6b5c43b0-8254-4e6a-a5f6-1edf5e9e791d.gif">|<img width= 600 src="https://user-images.githubusercontent.com/87055456/173079484-6b9fd17a-cac5-4890-8dbf-d9a755e9e9cf.gif">|
+### 3. Activity 백스택 관리
+이번 과제를 하면서 자동로그아웃 해제를 할 때, SettingActivity에서 다시 SignInActitivity로 Intent하는 방식으로 화면을 이동하였다.  
+그러나, SignInActivity에서 `back`버튼을 누르면 HomeActivity가 포그라운드에 나오는 문제가 생겼고 `Activity 백스택 관리`에 대해 공부를 하여 해결하였다:D 
+- 기존의 Task를 비우고, 새로운 Task를 생성하는 방식
+```kotlin
+val intent = Intent(this, SignInActivity::class.java)
+intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+// 과제에서는 Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK로만 설정해주어도 충분합니다~
+startActivity(intent)
+```
+- 기존의 Task를 비우고, 기존의 스택을 사용  
 
-갑자기.. 제 에뮬 or 안스에 문제가 생긴것 같습니다. GLide로 image뷰 넣어줄 때 image가 에뮬에 안떠요.. 다른 분들은 제 코드로 돌렸을 때 image잘 뜬다고 하는데 거참..
+```kotlin
+val intent = Intent(this, SignInActivity::class.java)
+finishAffinity() // guswo
+startActivity(intent)
+``` 
+
+액티비티 작업들은 `Intent Flags`와 `Manifest`내에 flag를 통해 작업관리를 할 수 있습니다!!
+- `FLAG_ACTIVITY_NEW_TASK` : 동일한 `taskAffinty`설정을 가진 백스택이 있으면 해당 Task로 들어가고, 없으면 새로운 `backStack`을 시작  
+- `FLAG_ACTIVITY_CLEAR_TASK` : 현재 TASK를 비웁니다.  
+- `FLAG_ACTIVITY_CLAER_TOP` : 호출하려는 Activity가 이미 스택에 있을 때, 새롭게 생성하지 않고 기존의 액티비티를 포그라운드로 가져옵니다. 그리고 액티비티스택의 최상단부터 포        그라운드로 가져올 액티비티까지의 모든 액티비티를 삭제합니다.  
+
+추가로 `finishAffinity()`는 해당 Task에 해당하는 스택을 모두 비워주고, 현 Activity도 종료시켜줍니다~  
+    자세한 내용은 [Tasks and the back stack 공식문서](https://developer.android.com/guide/components/activities/tasks-and-back-stack?hl=ko)을 참조해주세요 ㅎ ㅎ
+## 실행화면
+|온보딩	| 자동 로그인 |	자동 로그인 해제 |
+|:--:|:--:|:--:|
+|<img width= 600 src="https://user-images.githubusercontent.com/87055456/173237204-e259a984-8c75-49f1-8d1a-1018bbfd5875.gif">   | <img width= 600 src="https://user-images.githubusercontent.com/87055456/173237237-1f1c6a92-53dc-43c9-919f-110f3bce7736.gif">|<img width= 600 src="https://user-images.githubusercontent.com/87055456/173237244-903e38d5-2dd3-4f8f-9ff3-31f15e635521.gif">|
+
