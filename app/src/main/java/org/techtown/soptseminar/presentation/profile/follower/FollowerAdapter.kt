@@ -52,7 +52,7 @@ class FollowerAdapter(private val itemClick: ((FollowerData) -> (Unit))? = null)
         fun onBind(data: FollowerData) {
             Log.d("onBind:", data.toString())
             binding.follower = data
-            Glide.with(binding.root)
+            Glide.with(binding.ivProfile.context)
                 .load(data.image)
                 .circleCrop()
                 .into(binding.ivProfile)

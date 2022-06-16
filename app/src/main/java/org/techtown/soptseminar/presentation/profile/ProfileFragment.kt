@@ -15,6 +15,7 @@ import org.techtown.soptseminar.databinding.FragmentProfileBinding
 import org.techtown.soptseminar.presentation.SettingActivity
 import org.techtown.soptseminar.presentation.profile.follower.FollowerFragment
 import org.techtown.soptseminar.presentation.profile.repo.RepositoryFragment
+import org.techtown.soptseminar.util.SignSharedPreferences
 
 class ProfileFragment : Fragment() {
 
@@ -40,6 +41,9 @@ class ProfileFragment : Fragment() {
         binding.ivSetting.setOnClickListener {
             val intent = Intent(requireContext(), SettingActivity::class.java)
             startActivity(intent)
+            if (!SignSharedPreferences.getAutoMode(requireContext())) {
+                activity?.finish()
+            }
         }
     }
 
@@ -97,10 +101,3 @@ class ProfileFragment : Fragment() {
         const val REPOSITORY = 1
     }
 }
-
-/*
-transaction
-    .replace(R.id.fragment_main, followerFragment)
-    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-    .commit()
-*/
