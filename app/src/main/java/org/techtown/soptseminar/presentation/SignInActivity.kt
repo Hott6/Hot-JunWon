@@ -73,7 +73,7 @@ class SignInActivity : AppCompatActivity() {
 
         call.enqueueUtil(
             onSuccess = {
-                if (binding.ckbAuto.isChecked && !SignSharedPreferences.getAutoMode(this)) {
+                if (binding.ckbAuto.isChecked) {
                     SignSharedPreferences.setUserId(this, id)
                     SignSharedPreferences.setUserPassWord(this, pw)
                     SignSharedPreferences.setAutoMode(this, true)

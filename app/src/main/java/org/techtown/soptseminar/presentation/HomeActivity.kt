@@ -19,10 +19,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // signinActivity에서 username에 해당하는 이름 받아오기
         userData = intent.getStringExtra("username").toString()
-        Log.d(TAG, "HomeActivity - onCreate() called")
-        Log.d(TAG, "HomeActivity - onCreate() - $userData")
         initAdapter()
         initBottomNavigation()
     }
